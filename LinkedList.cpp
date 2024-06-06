@@ -125,3 +125,157 @@ Node* LinkedList::search(Node* head, int valueToBeSearched)
 
 	return nullptr;
 }
+
+void LinkedList::DeleteAtPosition(Node* head, Node* nodeToBeDeleted)
+{
+	//If asked to delete node
+	if (nodeToBeDeleted == head)
+	{
+		//Get next node
+		Node* newHead = head->next;
+
+		if (!newHead)
+		{
+			std::cout << "\nLinked list is empty.. Deleting head.." << std::endl;
+			free(head);
+			return;
+		}
+
+		//Head is deleted
+		free(head);
+		//Next node becomes new head
+		head = newHead;
+	}
+
+}
+
+void CircularLinkedList::InsertAtStart(Node** head, int ValueToBeInserted)
+{
+	Node* newNode = new Node(ValueToBeInserted);
+
+	//Point new node to first node
+	newNode->next = (*head)->next;
+	//Point head to new Node
+	(*head)->next = newNode;
+
+	std::cout << "\nInserted a value at the start!" << std::endl;
+}
+
+void CircularLinkedList::InsertAtEnd(Node* head, int ValueToBeInserted)
+{
+	//New node
+	Node* newNode = new Node(ValueToBeInserted);
+
+	Node* temp = head;
+
+	while (temp->next != head)
+	{
+		temp = temp->next;
+	}
+
+	//New node points to head
+	newNode->next = head;
+	//Last node points to new node
+	temp->next = newNode;
+
+	std::cout << "\nValue inserted at the end!";
+	
+}
+
+void CircularLinkedList::TraverseLinkedList(Node* head)
+{
+	Node* curr = head;
+
+	std::cout << "\nTraversing head node, starting traversal.." << std::endl;
+	curr = curr->next;
+
+	while (curr != head)
+	{
+		std::cout << "\n Next node traversed has a value of: " << curr->val << std::endl;
+		//Traverse to next
+		curr = curr->next;
+	}
+}
+
+Node** CircularLinkedList::Search(Node** head, int ValueToBeSearched)
+{
+	//Create temporary pointer
+	Node** temp = head;
+
+	//Traverse the head if not empty,
+	if ((*head)->next == *head)
+	{
+		std::cout << "\nList was empty";
+		return nullptr;
+	}
+
+	//Traverse the head
+	temp = &((*temp)->next);
+
+	while (*temp != *head)
+	{
+		//If we have found the value, return
+		if ((*temp)->val == ValueToBeSearched)
+		{
+			std::cout << "\nValue was found! Returning node" << std::endl;
+			return temp;
+		}
+
+		//Get address to the next node
+		temp = &((*temp)->next);
+	}
+
+	std::cout << "\nError, couldn't find value.." << std::endl;
+
+	return nullptr;
+}
+
+void CircularLinkedList::DeleteNode(Node** head, Node** nodeToBeDeleted)
+{
+
+	//If list is empty
+	if (head == nodeToBeDeleted)
+	{
+		std::cout << "\n List is empty.. Returning." << std::endl;
+		return;
+	}
+
+	//Find the node before node to be deleted
+	Node** prevNode = head;
+
+	prevNode = &((*head)->next);
+	
+	while ((*prevNode)->next != *nodeToBeDeleted)
+	{
+		if (prevNode == head)
+		{
+			std::cout << "\nCouldn't find deleted node's prev node.. Returning" << std::endl;
+			return;
+		}
+
+		prevNode = &((*prevNode)->next);
+
+	}
+
+	std::cout << "\nNode before deleted node has a value of" << (*prevNode)->val;
+
+	//Store the next node of nodeToBeDeleted
+	Node** nextNode = &((*nodeToBeDeleted)->next);
+
+	std::cout << "\nNode after deleted node has a value of" << (*nextNode)->val;
+
+	if (nextNode == nullptr)
+	{
+		std::cout << "\nThere wasn't a linked node after node that we're deleting.. Returning" << std::endl;
+		return;
+	}
+
+	//Points prev node to next node
+	(*prevNode)->next = *nextNode;
+	//Remove the link of nodeToBeDeleted
+	(*nodeToBeDeleted)->next = nullptr;
+
+	free(*nodeToBeDeleted);
+
+	
+}

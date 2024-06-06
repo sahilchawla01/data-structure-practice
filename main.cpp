@@ -130,6 +130,102 @@ void TestDoubleLinkedList()
 		}
 	}
 }
+
+void TestCircularLinkedList()
+{
+	//Initialise single linked list helper class
+	CircularLinkedList* singleCircularLinkedListClass = new CircularLinkedList();
+
+	//Initialise a list
+	Node* head = new Node(0);
+	head->next = head;
+
+
+	//Clear the screen 
+	system("cls");
+
+	int choice = 0;
+
+	while (choice != -1)
+	{
+		std::cout << "~~~~~~~~~~~~~~~~~Single Linked List Choice~~~~~~~~~~~~~~~\nChoose the method to test:\n\t-1)Exit\n\t1)Traversal\n\t2)Search\n\t3)Insertion at the beginning\n\t4)Insertion at the end\n\t5)Insertion at a position[NOT IMPLEMENTED]\n\t6) Deletion of a node\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+
+		std::cin >> choice;
+
+		switch (choice)
+		{
+		case -1: //Exit 
+			return;
+
+		case 1: //Test linked list traversal
+		{
+			singleCircularLinkedListClass->TraverseLinkedList(head);
+			break;
+		}
+		case 2: //Test linked list searching
+		{
+			int valueToBeFound = 0;
+			std::cout << "Insert value to be found:";
+			std::cin >> valueToBeFound;
+
+			singleCircularLinkedListClass->Search(&head, valueToBeFound);
+			break;
+		}
+		case 3: //Insertion at the beginning
+		{
+			int valueToBeInserted = 0;
+			std::cout << "Insert value to be inserted at the beginning:";
+			std::cin >> valueToBeInserted;
+
+			singleCircularLinkedListClass->InsertAtStart(&head, valueToBeInserted);
+			break;
+		}
+		case 4: //Insertion at the end
+		{
+			int valueToBeInserted = 0;
+			std::cout << "Insert value to be inserted at the end:";
+			std::cin >> valueToBeInserted;
+
+			singleCircularLinkedListClass->InsertAtEnd(head, valueToBeInserted);
+			break;
+		}
+		case 5: //Insertion at the position
+		{/*
+			int valueToBeInserted = 0;
+			int position = 0;
+			std::cout << "Insert value :";
+			std::cin >> valueToBeInserted;
+			std::cout << "Insert position :";
+			std::cin >> position;
+
+			singleCircularLinkedListCla ss->insertAtPosition(head, position, valueToBeInserted);
+			*/
+			break;
+		}
+		case 6:
+		{
+			int valueToBeDeleted = 0;
+			std::cout << "\nInsert value to be deleted" << std::endl;
+			std::cin >> valueToBeDeleted;
+
+			//First find that node
+			Node** nodeToBeDeleted = singleCircularLinkedListClass->Search(&head, valueToBeDeleted);
+
+			if (nodeToBeDeleted == nullptr)
+			{
+				std::cout << "\nCouldn't find node to be deleted.. Returning" << std::endl;
+				break;
+			}
+
+			//Delete the node
+			singleCircularLinkedListClass->DeleteNode(&head, nodeToBeDeleted);
+
+			break;
+			}
+		}
+	}
+}
+
 int main()
 {
 	int choice = -1;
@@ -153,6 +249,11 @@ int main()
 			case 2:
 			{
 				TestDoubleLinkedList();
+				break;
+			}
+			case 3:
+			{
+				TestCircularLinkedList();
 				break;
 			}
 			default:
