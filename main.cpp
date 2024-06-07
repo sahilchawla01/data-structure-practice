@@ -2,6 +2,7 @@
 #include <map>
 #include <unordered_map>
 #include <stdlib.h> 
+#include "CustomStack.h"
 #include "LinkedList.h"
 #include "DoubleLinkedList.h"
 
@@ -238,12 +239,83 @@ void TestCircularLinkedList()
 	}
 }
 
+void TestStack()
+{
+	//Create the stack
+	CustomStack* stack = new CustomStack();
+
+	//Clear the screen 
+	system("cls");
+
+	int choice = -1;
+	while (choice != 0)
+	{
+		std::cout << "\n~~~~~~~~~~~~~~~~~~~~STACK MENU~~~~~~~~~~~~~~~~~~~~\n\t0)Exit\n\t1)Push\n\t2)Pop\n\t3)Peek\n\t4)Is stack full?\n\t5)Is stack empty?\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+
+		std::cin >> choice;
+
+		switch (choice)
+		{
+			case 0:
+			{
+				return;
+			}
+			case 1:
+			{
+				std::cout << "\nEnter a value to push onto the stack: ";
+				int valueToPush = -1;
+				std::cin >> valueToPush;
+
+				stack->Push(valueToPush);
+
+				break;
+			}
+			case 2:
+			{
+				int poppedValue = -1;
+
+				poppedValue = stack->Pop();
+
+				std::cout << "\nValue popped: " << poppedValue;
+				break;
+			}
+			case 3:
+			{
+				int topValue = -1;
+
+				topValue = stack->Peek();
+
+				std::cout << "\nTop value is : " << topValue;
+				break;
+			}
+			case 4:
+			{
+				bool bStackFull = stack->IsFull();
+
+				std::cout << "\nIs stack full: " << bStackFull << std::endl;
+				break;
+			}
+			case 5:
+			{
+				bool bStackEmpty = stack->IsEmpty();
+
+				std::cout << "\nIs stack empty: " << bStackEmpty << std::endl;
+				break;
+			}
+			default:
+			{
+				std::cout << "\nError, enter a number between 1 and 5";
+			}
+		}
+	}
+}
+
 int main()
 {
 	int choice = -1;
 	while (choice != 0)
 	{
-		std::cout << "~~~~~~~~~~~~~~~~~~~~Data Structures MENU~~~~~~~~~~~~~~~~~~~~\nChoose the data structure to test:\n\t0) Exit\n\t1)Single Linked List\n\t2)Doubly Linked List\n\t3)Circular Linked List\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+		std::cout << "~~~~~~~~~~~~~~~~~~~~Data Structures MENU~~~~~~~~~~~~~~~~~~~~\nChoose the data structure to test:\n\t0) Exit\n\t1)Single Linked List\n\t2)Doubly Linked List\n\t3)Circular Linked List\n\t4)Stack\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
 
 		std::cin >> choice;
 
@@ -266,6 +338,11 @@ int main()
 			case 3:
 			{
 				TestCircularLinkedList();
+				break;
+			}
+			case 4:
+			{
+				TestStack();
 				break;
 			}
 			default:
