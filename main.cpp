@@ -10,10 +10,9 @@ void TestLinkedList()
 	//Initialise single linked list helper class
 	LinkedList* singleLinkedListClass = new LinkedList();
 
-	//Initialise a list
-	Node* head = new Node(0);
+	//Initially the linked list is empty
+	Node* head = nullptr;
 	
-
 	//Clear the screen 
 	system("cls");
 
@@ -21,7 +20,7 @@ void TestLinkedList()
 
 	while (choice != -1)
 	{
-		std::cout << "~~~~~~~~~~~~~~~~~Single Linked List Choice~~~~~~~~~~~~~~~\nChoose the method to test:\n\t-1)Exit\n\t1)Traversal\n\t2)Search\n\t3)Insertion at the beginning\n\t4)Insertion at the end\n\t5)Insertion at a position\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+		std::cout << "~~~~~~~~~~~~~~~~~Single Linked List Choice~~~~~~~~~~~~~~~\nChoose the method to test:\n\t-1)Exit\n\t1)Traversal\n\t2)Search\n\t3)Insertion at the beginning\n\t4)Insertion at the end\n\t5)Insertion at a position (Pos: starts from 0)\n\t6)Delete at position\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
 
 		std::cin >> choice;
 
@@ -50,7 +49,7 @@ void TestLinkedList()
 			std::cout << "Insert value to be inserted at the beginning:";
 			std::cin >> valueToBeInserted;
 
-			singleLinkedListClass->insertAtStart(head, valueToBeInserted);
+			singleLinkedListClass->insertAtStart(&head, valueToBeInserted);
 			break;
 		}
 		case 4: //Insertion at the end
@@ -59,7 +58,7 @@ void TestLinkedList()
 			std::cout << "Insert value to be inserted at the end:";
 			std::cin >> valueToBeInserted;
 
-			singleLinkedListClass->insertAtEnd(head, valueToBeInserted);
+			singleLinkedListClass->insertAtEnd(&head, valueToBeInserted);
 			break;
 		}
 		case 5: //Insertion at the position
@@ -71,7 +70,20 @@ void TestLinkedList()
 			std::cout << "Insert position :";
 			std::cin >> position;
 
-			singleLinkedListClass->insertAtPosition(head, position, valueToBeInserted);
+			singleLinkedListClass->insertAtPosition(&head, position, valueToBeInserted);
+			break;
+		}
+		case 6: //Deletion at a position
+		{
+			int valueToBeDeleted = 0;
+			std::cout << "Insert value to be deleted";
+			std::cin >> valueToBeDeleted;
+
+			//Search for node
+			Node* nodeToBeDeleted = singleLinkedListClass->search(head, valueToBeDeleted);
+
+			//Delete node
+			singleLinkedListClass->DeleteAtPosition(&head, &nodeToBeDeleted);
 			break;
 		}
 		}

@@ -11,12 +11,12 @@ class LinkedList
 {
 public:
 
-	void insertAtStart(Node* head, int valueToBeAdded);
-	void insertAtEnd(Node* head, int valueToBeInserted);
-	void insertAtPosition(Node* head, int position, int valueToBeInserted);
+	void insertAtStart(Node** head, int valueToBeAdded);
+	void insertAtEnd(Node** head, int valueToBeInserted);
+	void insertAtPosition(Node** head, int position, int valueToBeInserted);
 	void traverseLinkedList(Node* head);
 	Node* search(Node* head, int valueToBeSearched);
-	void DeleteAtPosition(Node* head, Node* nodeToBeDeleted);
+	void DeleteAtPosition(Node** head, Node** nodeToBeDeleted);
 };
 
 class CircularLinkedList

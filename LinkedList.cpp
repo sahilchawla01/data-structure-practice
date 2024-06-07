@@ -2,26 +2,34 @@
 #include <iostream>
 
 
-void LinkedList::insertAtStart(Node* head, int valueToBeAdded)
+void LinkedList::insertAtStart(Node** head, int valueToBeAdded)
 {
 	//Create the node with new value
 	Node* curr = new Node(valueToBeAdded);
 
-	//Point curr to the last first node
-	curr->next = head->next;
-
-	//Point head to the new first node, curr
-	head->next = curr;
+	//New node points to the original head
+	curr->next = (*head);
+	//The new head becomes the current node
+	*head = curr;
 
 	std::cout << "Value was inserted!" << std::endl;
 }
 
-void LinkedList::insertAtEnd(Node* head, int valueToBeInserted)
+void LinkedList::insertAtEnd(Node** head, int valueToBeInserted)
 {
 	//Create new node
 	Node* curr = new Node(valueToBeInserted);
 
-	Node* pointerNode = head;
+	if (head == nullptr) //If linked list is empty
+	{
+		curr->next = nullptr;
+		//The head becomes current
+		*head = curr;
+		std::cout << "Value was inserted!" << std::endl;
+		return;
+	}
+
+	Node* pointerNode = *head;
 	//Traverse to the end and store end node, point end node to new node
 	while (pointerNode->next != nullptr)
 	{
@@ -33,24 +41,35 @@ void LinkedList::insertAtEnd(Node* head, int valueToBeInserted)
 	std::cout << "Value was inserted!" << std::endl;
 }
 
-void LinkedList::insertAtPosition(Node* head, int position, int valueToBeInserted)
+void LinkedList::insertAtPosition(Node** head, int position, int valueToBeInserted)
 {
 	//Create the new node
 	Node* curr = new Node(valueToBeInserted);
 
-	//If empty, insert at beginning
-	if (head->next == nullptr)
+	if (head == nullptr) //If linked list is empty
 	{
-		head->next = curr;
+		curr->next = nullptr;
+		//The head becomes current
+		*head = curr;
+		std::cout << "Value was inserted!" << std::endl;
+		return;
+	}
+
+	//If empty, insert at beginning
+	if ((*head)->next == nullptr)
+	{
+		(*head)->next = curr;
 
 		std::cout << "Value was inserted!" << std::endl;
 		return;
 	}
 
-	//If position is zero, give error
 	if (position == 0)
 	{
-		std::cout << "Error, only values of 1 and above are accepted!" << std::endl;
+		//Point the new node to the head
+		curr->next = *head;
+		//Head now points to new node
+		*head = curr;
 		return;
 	}
 
@@ -58,20 +77,20 @@ void LinkedList::insertAtPosition(Node* head, int position, int valueToBeInserte
 	int count = 0;
 
 	//Point to the head node
-	Node* pointerNode = head;
+	Node* nodeBeforePosition = *head;
 
-	while (pointerNode->next != nullptr)
+	while (nodeBeforePosition->next != nullptr)
 	{
 		if (count == position - 1) break;
 
-		pointerNode = pointerNode->next;
+		nodeBeforePosition = nodeBeforePosition->next;
 		count++;
 	}
 
 	//If end of linked list reached, simply add it to the end
-	if (!pointerNode->next)
+	if (!nodeBeforePosition->next)
 	{
-		pointerNode->next = curr;
+		nodeBeforePosition->next = curr;
 
 		std::cout << "Value was inserted!" << std::endl;
 
@@ -79,10 +98,10 @@ void LinkedList::insertAtPosition(Node* head, int position, int valueToBeInserte
 	}
 
 	//Store next pointer 
-	Node* newNextNode = pointerNode->next;
+	Node* newNextNode = nodeBeforePosition->next;
 
 	//Point position - 1 pointer to new node
-	pointerNode->next = curr;
+	nodeBeforePosition->next = curr;
 	//Point new node to next new pointer
 	curr->next = newNextNode;
 
@@ -93,6 +112,12 @@ void LinkedList::insertAtPosition(Node* head, int position, int valueToBeInserte
 void LinkedList::traverseLinkedList(Node* head)
 {
 	Node* curr = head;
+
+	if (head == nullptr)
+	{
+		std::cout << "\nLinked list was empty!" << std::endl;
+		return;
+	}
 
 	while (curr != nullptr)
 	{
@@ -126,27 +151,54 @@ Node* LinkedList::search(Node* head, int valueToBeSearched)
 	return nullptr;
 }
 
-void LinkedList::DeleteAtPosition(Node* head, Node* nodeToBeDeleted)
+void LinkedList::DeleteAtPosition(Node** head, Node** nodeToBeDeleted)
 {
-	//If asked to delete node
-	if (nodeToBeDeleted == head)
+	//if node to be deleted doesn't exist
+	if (nodeToBeDeleted == nullptr)
 	{
-		//Get next node
-		Node* newHead = head->next;
-
-		if (!newHead)
-		{
-			std::cout << "\nLinked list is empty.. Deleting head.." << std::endl;
-			free(head);
-			return;
-		}
-
-		//Head is deleted
-		free(head);
-		//Next node becomes new head
-		head = newHead;
+		std::cout << "\nNode to be deleted was null, returning.." << std::endl;
+		return;
 	}
 
+	//If asked to delete head
+	if (*nodeToBeDeleted == *head)
+	{
+		//Head becomes the next node
+		*head = (*nodeToBeDeleted)->next;
+
+		std::cout << "\nHead was deleted.." << std::endl;
+		return;
+	}
+
+	//Store node after node to be deleted
+	Node** nextNode = &((*nodeToBeDeleted)->next);
+
+	Node* prev = *head;
+
+	//Traverse to get node before deleted node
+	while (prev->next != *nodeToBeDeleted)
+	{
+		prev = prev->next;
+	}
+
+	if (prev == nullptr)
+	{
+		std::cout << "\nCouldn't find the node before the node to be deleted.. Returning" << std::endl;
+		return;
+	}
+
+	if (nextNode)
+	{
+		std::cout << "\nNext node was found to be " << (*nextNode)->val;
+		//Point the node just before deleted node to node just after deleted node
+		prev->next = *nextNode;
+	}
+	else
+	{
+		std::cout << "\nNextNode after deleted node was null";
+	}
+
+	free(*nodeToBeDeleted);
 }
 
 void CircularLinkedList::InsertAtStart(Node** head, int ValueToBeInserted)
