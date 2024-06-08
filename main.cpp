@@ -5,6 +5,7 @@
 #include "CustomStack.h"
 #include "LinkedList.h"
 #include "DoubleLinkedList.h"
+#include "Queue.h"
 
 void TestLinkedList()
 {
@@ -306,6 +307,77 @@ void TestStack()
 			{
 				std::cout << "\nError, enter a number between 1 and 5";
 			}
+		}
+	}
+}
+
+void TestQueue()
+{
+	//Create the stack
+	Queue* queue = new Queue();
+
+	//Clear the screen 
+	system("cls");
+
+	int choice = -1;
+	while (choice != 0)
+	{
+		std::cout << "\n~~~~~~~~~~~~~~~~~~~~QUEUE MENU~~~~~~~~~~~~~~~~~~~~\n\t0)Exit\n\t1)Push\n\t2)Pop\n\t3)Peek\n\t4)Is queue full?\n\t5)Is queue empty?\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+
+		std::cin >> choice;
+
+		switch (choice)
+		{
+		case 0:
+		{
+			return;
+		}
+		case 1:
+		{
+			std::cout << "\nEnter a value to push onto the queue: ";
+			int valueToPush = -1;
+			std::cin >> valueToPush;
+
+			queue->Push(valueToPush);
+
+			break;
+		}
+		case 2:
+		{
+			int poppedValue = -1;
+
+			poppedValue = queue->Pop();
+
+			std::cout << "\nValue popped: " << poppedValue;
+			break;
+		}
+		case 3:
+		{
+			int topValue = -1;
+
+			topValue = queue->Peek();
+
+			std::cout << "\nTop value is : " << topValue;
+			break;
+		}
+		case 4:
+		{
+			bool bQueueFull = queue->IsFull();
+
+			std::cout << "\nIs queue full: " << bQueueFull << std::endl;
+			break;
+		}
+		case 5:
+		{
+			bool bQueueEmpty = queue->IsEmpty();
+
+			std::cout << "\nIs queue empty: " << bQueueEmpty << std::endl;
+			break;
+		}
+		default:
+		{
+			std::cout << "\nError, enter a number between 1 and 5";
+		}
 		}
 	}
 }
