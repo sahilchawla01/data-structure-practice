@@ -155,3 +155,36 @@ int InputRestrictedQueue::Dequeue_Back()
 	return RearValue;
 }
 
+OutputRestrictedQueue::OutputRestrictedQueue()
+{
+	front = rear = nullptr;
+}
+
+void OutputRestrictedQueue::Enqueue_Front(int element)
+{
+	if (IsFull())
+	{
+		std::cout << "\nQueue is full, Enqueue_Front operation failed. Returning.." << std::endl;
+		return;
+	}
+
+	QueueNode* newElementNode = new QueueNode(element);
+
+	if (IsEmpty())
+	{
+		front = rear = newElementNode;
+		std::cout<<"\nQueue is empty, Enqueue_Front operation succeeded, inserted value: "<<element<<" Returning.."<<std::endl;
+		return;
+	}
+	QueueNode* oldFront = front;
+
+	//New front becomes new element node
+	front = newElementNode;
+
+	//New front points to oldFront
+	front->next = oldFront;
+
+	//Increment length of queue
+	CurrentLength++;
+	std::cout << "\nEnqueue_Front operation succeeded, inserted value: " << element;
+}

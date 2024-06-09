@@ -38,3 +38,11 @@ public:
 	
 };
 
+class OutputRestrictedQueue : public Queue
+{
+public:
+	OutputRestrictedQueue();
+
+	void Enqueue_Front(int element);
+};
+
