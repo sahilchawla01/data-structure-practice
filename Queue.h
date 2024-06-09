@@ -46,3 +46,11 @@ public:
 	void Enqueue_Front(int element);
 };
 
+class DoubleQueue : public Queue
+{
+public:
+	DoubleQueue();
+
+	void Enqueue_Front(int element);
+	int Dequeue_Back();
+};

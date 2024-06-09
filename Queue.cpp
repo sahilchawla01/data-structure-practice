@@ -188,3 +188,83 @@ void OutputRestrictedQueue::Enqueue_Front(int element)
 	CurrentLength++;
 	std::cout << "\nEnqueue_Front operation succeeded, inserted value: " << element;
 }
+
+DoubleQueue::DoubleQueue()
+{
+	rear = front = nullptr;
+}
+
+void DoubleQueue::Enqueue_Front(int element)
+{
+	if (IsFull())
+	{
+		std::cout << "\nQueue is full, Enqueue_Front operation failed. Returning.." << std::endl;
+		return;
+	}
+
+	QueueNode* newElementNode = new QueueNode(element);
+
+	if (IsEmpty())
+	{
+		front = rear = newElementNode;
+		std::cout << "\nQueue is empty, Enqueue_Front operation succeeded, inserted value: " << element << " Returning.." << std::endl;
+		return;
+	}
+	QueueNode* oldFront = front;
+
+	//New front becomes new element node
+	front = newElementNode;
+
+	//New front points to oldFront
+	front->next = oldFront;
+
+	//Increment length of queue
+	CurrentLength++;
+	std::cout << "\nEnqueue_Front operation succeeded, inserted value: " << element;
+}
+
+int DoubleQueue::Dequeue_Back()
+{
+	if (IsEmpty())
+	{
+		std::cout << "\nDequeue_back operation cancelled, queue was empty" << std::endl;
+		return -1;
+	}
+
+	if (front == rear)
+	{
+		int dequeueValue = front->value;
+
+		std::cout << "\nDequeue_back operation done, queue was emptied.. Dequeued value: " << dequeueValue;
+
+		//Empty the queue
+		front = rear = nullptr;
+
+		return dequeueValue;
+	}
+
+	//Store old rear element
+	QueueNode* temp = rear;
+	int RearValue = temp->value;
+
+	QueueNode* newRearElement = front;
+	//Traverse to the second last element
+	while (newRearElement->next != rear)
+	{
+		newRearElement = newRearElement->next;
+	}
+
+	//New rear element will become the node before the old rear element
+	rear = newRearElement;
+
+	//Release temp
+	free(temp);
+
+	std::cout << "\nDequeue_back operation succeeded, dequeued element: " << RearValue << std::endl;
+	std::cout << "\nNew rear element is: " << rear->value;
+
+	//Decrement length of queue 
+	CurrentLength--;
+
+	return RearValue;
+}
