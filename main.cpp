@@ -322,7 +322,7 @@ void TestQueue()
 	int choice = -1;
 	while (choice != 0)
 	{
-		std::cout << "\n~~~~~~~~~~~~~~~~~~~~QUEUE MENU~~~~~~~~~~~~~~~~~~~~\n\t0)Exit\n\t1)Push\n\t2)Pop\n\t3)Peek\n\t4)Is queue full?\n\t5)Is queue empty?\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+		std::cout << "\n~~~~~~~~~~~~~~~~~~~~QUEUE MENU~~~~~~~~~~~~~~~~~~~~\n\t0)Exit\n\t1)Enqueue\n\t2)Dequeue\n\t3)Front\n\t4)Rear\n\t5)Is queue full\n\t6)Is queue empty?\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
 
 		std::cin >> choice;
 
@@ -338,7 +338,7 @@ void TestQueue()
 			int valueToPush = -1;
 			std::cin >> valueToPush;
 
-			queue->Push(valueToPush);
+			queue->Enqueue(valueToPush);
 
 			break;
 		}
@@ -346,28 +346,37 @@ void TestQueue()
 		{
 			int poppedValue = -1;
 
-			poppedValue = queue->Pop();
+			poppedValue = queue->Dequeue();
 
-			std::cout << "\nValue popped: " << poppedValue;
+			std::cout << "\nDequeued Value: " << poppedValue;
 			break;
 		}
 		case 3:
 		{
 			int topValue = -1;
 
-			topValue = queue->Peek();
+			topValue = queue->Front();
 
-			std::cout << "\nTop value is : " << topValue;
+			std::cout << "\nFront value is: " << topValue;
 			break;
 		}
 		case 4:
+		{
+			int rearValue = -1;
+
+			rearValue = queue->Rear();
+
+			std::cout << "\nRear value is: " << rearValue;
+			break;
+		}
+		case 5:
 		{
 			bool bQueueFull = queue->IsFull();
 
 			std::cout << "\nIs queue full: " << bQueueFull << std::endl;
 			break;
 		}
-		case 5:
+		case 6:
 		{
 			bool bQueueEmpty = queue->IsEmpty();
 
@@ -387,7 +396,7 @@ int main()
 	int choice = -1;
 	while (choice != 0)
 	{
-		std::cout << "~~~~~~~~~~~~~~~~~~~~Data Structures MENU~~~~~~~~~~~~~~~~~~~~\nChoose the data structure to test:\n\t0) Exit\n\t1)Single Linked List\n\t2)Doubly Linked List\n\t3)Circular Linked List\n\t4)Stack\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+		std::cout << "~~~~~~~~~~~~~~~~~~~~Data Structures MENU~~~~~~~~~~~~~~~~~~~~\nChoose the data structure to test:\n\t0) Exit\n\t1)Single Linked List\n\t2)Doubly Linked List\n\t3)Circular Linked List\n\t4)Stack\n\t5)Simple Queue\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
 
 		std::cin >> choice;
 
@@ -415,6 +424,11 @@ int main()
 			case 4:
 			{
 				TestStack();
+				break;
+			}
+			case 5:
+			{
+				TestQueue();
 				break;
 			}
 			default:
