@@ -391,12 +391,101 @@ void TestQueue()
 	}
 }
 
+void TestInputRestrictedQueue()
+{
+	//Create the stack
+	InputRestrictedQueue* queue = new InputRestrictedQueue();
+
+	//Clear the screen 
+	system("cls");
+
+	int choice = -1;
+	while (choice != 0)
+	{
+		std::cout << "\n~~~~~~~~~~~~~~~~~~~~INPUT-RESTRICTED QUEUE MENU~~~~~~~~~~~~~~~~~~~~\n\t0)Exit\n\t1)Enqueue\n\t2)Dequeue\n\t3)Dequeue_back\n\t4)Front\n\t5)Rear\n\t6)Is queue full\n\t7)Is queue empty?\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+
+		std::cin >> choice;
+
+		switch (choice)
+		{
+		case 0:
+		{
+			return;
+		}
+		case 1:
+		{
+			std::cout << "\nEnter a value to push onto the queue: ";
+			int valueToPush = -1;
+			std::cin >> valueToPush;
+
+			queue->Enqueue(valueToPush);
+
+			break;
+		}
+		case 2:
+		{
+			int poppedValue = -1;
+
+			poppedValue = queue->Dequeue();
+
+			std::cout << "\nDequeued Value: " << poppedValue;
+			break;
+		}
+		case 3:
+		{
+			int poppedValue = -1;
+
+			poppedValue = queue->Dequeue_Back();
+
+			std::cout << "\nDequeued_Back Value: " << poppedValue;
+			break;
+		}
+		case 4:
+		{
+			int topValue = -1;
+
+			topValue = queue->Front();
+
+			std::cout << "\nFront value is: " << topValue;
+			break;
+		}
+		case 5:
+		{
+			int rearValue = -1;
+
+			rearValue = queue->Rear();
+
+			std::cout << "\nRear value is: " << rearValue;
+			break;
+		}
+		case 6:
+		{
+			bool bQueueFull = queue->IsFull();
+
+			std::cout << "\nIs queue full: " << bQueueFull << std::endl;
+			break;
+		}
+		case 7:
+		{
+			bool bQueueEmpty = queue->IsEmpty();
+
+			std::cout << "\nIs queue empty: " << bQueueEmpty << std::endl;
+			break;
+		}
+		default:
+		{
+			std::cout << "\nError, enter a number between 1 and 5";
+		}
+		}
+	}
+}
+
 int main()
 {
 	int choice = -1;
 	while (choice != 0)
 	{
-		std::cout << "~~~~~~~~~~~~~~~~~~~~Data Structures MENU~~~~~~~~~~~~~~~~~~~~\nChoose the data structure to test:\n\t0) Exit\n\t1)Single Linked List\n\t2)Doubly Linked List\n\t3)Circular Linked List\n\t4)Stack\n\t5)Simple Queue\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+		std::cout << "~~~~~~~~~~~~~~~~~~~~Data Structures MENU~~~~~~~~~~~~~~~~~~~~\nChoose the data structure to test:\n\t0) Exit\n\t1)Single Linked List\n\t2)Doubly Linked List\n\t3)Circular Linked List\n\t4)Stack\n\t5)Simple Queue\n\t6)Input-Restricted Queue\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
 
 		std::cin >> choice;
 
@@ -429,6 +518,11 @@ int main()
 			case 5:
 			{
 				TestQueue();
+				break;
+			}
+			case 6:
+			{
+				TestInputRestrictedQueue();
 				break;
 			}
 			default:
