@@ -212,3 +212,50 @@ void BinaryTree::LevelOrderTraversal(BTNode* rootNode)
 		}
 	}
 }
+
+void BinaryTree::DeleteElement(BTNode** rootNode, int valueToDelete)
+{
+	//Perform any traversal (here, LevelOrder)
+	//Store the node to be deleted, and its parent
+	//Continue traversing until deepest right most node is found
+
+	BTNode* temp = *rootNode;
+	std::queue<BTNode*> BinaryTreeQueue;
+
+	BTNode* nodeToDelete = nullptr;
+
+	BinaryTreeQueue.push(temp);
+
+	//Do level-order traversal and store node to be deleted
+	while (!BinaryTreeQueue.empty())
+	{
+		temp = BinaryTreeQueue.front();
+		BinaryTreeQueue.pop();
+
+		if (temp->data = valueToDelete)
+			nodeToDelete = temp;
+
+		if (temp->leftChild != nullptr)
+			BinaryTreeQueue.push(temp->leftChild);
+
+		if (temp->rightChild != nullptr)
+			BinaryTreeQueue.push(temp->rightChild);
+	}
+
+	//By the end of the traversal, temp stores the final deepest right-most node
+
+	if (nodeToDelete == nullptr)
+	{
+		std::cout << "\nCouldn't find node to delete";
+		return;
+	}
+
+	//Store deepest data
+	int deepestData = temp->data;
+	//Replace node's data with deepest data (thus deleting it)
+	nodeToDelete->data = deepestData;
+
+	//Delete the deepest node now
+
+
+}

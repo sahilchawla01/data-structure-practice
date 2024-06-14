@@ -32,5 +32,7 @@ public:
 
 	//BFS approach of traversal:
 	void LevelOrderTraversal(BTNode* rootNode);
+
+	void DeleteElement(BTNode** rootNode, int valueToDelete);
 };
 

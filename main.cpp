@@ -684,7 +684,7 @@ void TestBinaryTree()
 	int choice = -1;
 	while (choice != 0)
 	{
-		std::cout << "\n~~~~~~~~~~~~~~~~~~~~BINARY TREE MENU~~~~~~~~~~~~~~~~~~~~\n\t0)Exit\n\t1)Insert Value\n\t2)(Recursive)Pre-Order Traversal\n\t3)(Recursive)Post-Order Traversal\n\t4)(Recursive) In-Order Traversal\n\t5)(Non-Recursive)Pre-Order Traversal\n\t6)(Non-Recursive)[NOT IMPLEMENTED] Post-Order Traversal\n\t7)(Non-Recursive) In-Order Traversal\n\t8)Level-Order Traversal (BFS)\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+		std::cout << "\n~~~~~~~~~~~~~~~~~~~~BINARY TREE MENU~~~~~~~~~~~~~~~~~~~~\n\t0)Exit\n\t1)Insert Value\n\t2)(Recursive)Pre-Order Traversal\n\t3)(Recursive)Post-Order Traversal\n\t4)(Recursive) In-Order Traversal\n\t5)(Non-Recursive)Pre-Order Traversal\n\t6)(Non-Recursive)[NOT IMPLEMENTED] Post-Order Traversal\n\t7)(Non-Recursive) In-Order Traversal\n\t8)Level-Order Traversal (BFS)\n\t9)Delete an element in the Binary Tree\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
 
 		std::cin >> choice;
 
@@ -743,6 +743,15 @@ void TestBinaryTree()
 		{
 			std::cout << "\nPeforming level-order traversal (BFS): ";
 			tree->LevelOrderTraversal(root);
+			break;
+		}
+		case 9:
+		{
+			int valueToDelete = -1;
+			std::cout << "\nEnter the node you want to delete" << std::endl;
+			std::cin >> valueToDelete;
+
+
 			break;
 		}
 		default:
