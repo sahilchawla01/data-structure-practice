@@ -6,6 +6,7 @@
 #include "LinkedList.h"
 #include "DoubleLinkedList.h"
 #include "Queue.h"
+#include "BinaryTree.h"
 
 void TestLinkedList()
 {
@@ -670,13 +671,95 @@ void TestDeQueue()
 	}
 }
 
+void TestBinaryTree()
+{
+	//Create the tree
+	BinaryTree* tree = new BinaryTree();
+
+	//Create empty root node
+	BTNode* root = nullptr;
+
+	system("cls");
+
+	int choice = -1;
+	while (choice != 0)
+	{
+		std::cout << "\n~~~~~~~~~~~~~~~~~~~~BINARY TREE MENU~~~~~~~~~~~~~~~~~~~~\n\t0)Exit\n\t1)Insert Value\n\t2)(Recursive)Pre-Order Traversal\n\t3)(Recursive)Post-Order Traversal\n\t4)(Recursive) In-Order Traversal\n\t5)(Non-Recursive)Pre-Order Traversal\n\t6)(Non-Recursive)[NOT IMPLEMENTED] Post-Order Traversal\n\t7)(Non-Recursive) In-Order Traversal\n\t8)Level-Order Traversal (BFS)\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+
+		std::cin >> choice;
+
+		switch (choice)
+		{
+		case 0:
+		{
+			return;
+		}
+		case 1:
+		{
+			std::cout << "\nEnter a value to insert into binary tree: ";
+			int valueToPush = -1;
+			std::cin >> valueToPush;
+
+			tree->InsertByLevelOrderTraversal(&root, valueToPush);
+			break;
+		}
+		case 2:
+		{
+			std::cout << "\nPerforming recursive pre-order traversal: ";
+			tree->RecursivePreOrderTraversal(root);
+			break;
+		}
+		case 3:
+		{
+			std::cout << "\nPerforming recursive post-order traversal: ";
+			tree->RecursivePostOrderTraversal(root);
+			break;
+		}
+		case 4:
+		{
+			std::cout << "\nPerforming recursive in-order traversal: ";
+			tree->RecursiveInOrderTraversal(root);
+			break;
+		}
+		case 5:
+		{
+			std::cout << "\nPerforming non-recursive pre-order traversal: ";
+			tree->NonRecursivePreOrderTraversal(root);
+			break;
+		}
+		case 6:
+		{
+			//std::cout << "\nPerforming non-recursive post-order traversal: ";
+			//tree->NonRecursivePostOrderTraversal(root);
+			break;
+		}
+		case 7:
+		{
+			std::cout << "\nPerforming non-recursive in-order traversal: ";
+			tree->NonRecursiveInOrderTraversal(root);
+			break;
+		}
+		case 8:
+		{
+			std::cout << "\nPeforming level-order traversal (BFS): ";
+			tree->LevelOrderTraversal(root);
+			break;
+		}
+		default:
+		{
+			std::cout << "\nError, enter a number between 1 and 8";
+		}
+		}
+	}
+
+}
 
 int main()
 {
 	int choice = -1;
 	while (choice != 0)
 	{
-		std::cout << "~~~~~~~~~~~~~~~~~~~~Data Structures MENU~~~~~~~~~~~~~~~~~~~~\nChoose the data structure to test:\n\t0) Exit\n\t1)Single Linked List\n\t2)Doubly Linked List\n\t3)Circular Linked List\n\t4)Stack\n\t5)Simple Queue\n\t6)Input-Restricted Queue\n\t7)Output-restricted Queue\n\t8)Double Ended Queue\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+		std::cout << "~~~~~~~~~~~~~~~~~~~~Data Structures MENU~~~~~~~~~~~~~~~~~~~~\nChoose the data structure to test:\n\t0) Exit\n\t1)Single Linked List\n\t2)Doubly Linked List\n\t3)Circular Linked List\n\t4)Stack\n\t5)Simple Queue\n\t6)Input-Restricted Queue\n\t7)Output-restricted Queue\n\t8)Double Ended Queue\n\t9)Simple binary tree\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
 
 		std::cin >> choice;
 
@@ -724,6 +807,11 @@ int main()
 			case 8:
 			{
 				TestDeQueue();
+				break;
+			}
+			case 9:
+			{
+				TestBinaryTree();
 				break;
 			}
 			default:

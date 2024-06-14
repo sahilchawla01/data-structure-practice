@@ -127,6 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BinaryTree.h" />
     <ClInclude Include="CustomStack.h" />
     <ClInclude Include="DoubleLinkedList.h" />
     <ClInclude Include="HelloWorld.h" />
@@ -134,6 +135,7 @@
     <ClInclude Include="Queue.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BinaryTree.cpp" />
     <ClCompile Include="CustomStack.cpp" />
     <ClCompile Include="DoubleLinkedList.cpp" />
     <ClCompile Include="LinkedList.cpp" />
