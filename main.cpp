@@ -8,6 +8,7 @@
 #include "Queue.h"
 #include "BinaryTree.h"
 #include "BinarySearchTree.h"
+#include "Heap.h"
 
 void TestLinkedList()
 {
@@ -86,7 +87,7 @@ void TestLinkedList()
 			//Search for node
 			Node* nodeToBeDeleted = singleLinkedListClass->search(head, valueToBeDeleted);
 
-			//Delete node
+			//DeleteMax node
 			singleLinkedListClass->DeleteAtPosition(&head, &nodeToBeDeleted);
 			break;
 		}
@@ -209,9 +210,9 @@ void TestCircularLinkedList()
 		{/*
 			int valueToBeInserted = 0;
 			int position = 0;
-			std::cout << "Insert value :";
+			std::cout << "InsertInMaxHeap value :";
 			std::cin >> valueToBeInserted;
-			std::cout << "Insert position :";
+			std::cout << "InsertInMaxHeap position :";
 			std::cin >> position;
 
 			singleCircularLinkedListCla ss->insertAtPosition(head, position, valueToBeInserted);
@@ -233,7 +234,7 @@ void TestCircularLinkedList()
 				break;
 			}
 
-			//Delete the node
+			//DeleteMax the node
 			singleCircularLinkedListClass->DeleteNode(&head, nodeToBeDeleted);
 
 			break;
@@ -805,7 +806,7 @@ void TestBinarySearchTree()
 	int choice = -1;
 	while (choice != 0)
 	{
-		std::cout << "\n~~~~~~~~~~~~~~~~~~~~BINARY SEARCH TREE MENU~~~~~~~~~~~~~~~~~~~~\n\t0)Exit\n\t1)Insert Value\n\t2)Level-Order Traversal (BFS)\n\t3)In-order traversal\n\t4)Delete an element\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+		std::cout << "\n~~~~~~~~~~~~~~~~~~~~BINARY SEARCH TREE MENU~~~~~~~~~~~~~~~~~~~~\n\t0)Exit\n\t1)Insert Value\n\t2)Level-Order Traversal (BFS)\n\t3)In-order traversal\n\t4)Delete an element\n\t5)GenerateTreeFromPreOrder [NOT IMPLEMENTED]\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
 
 		std::cin >> choice;
 
@@ -851,12 +852,105 @@ void TestBinarySearchTree()
 	}
 }
 
+void TestHeap()
+{
+	Heap* heap = new Heap(100);
+
+	system("cls");
+
+	int choice = -1;
+	while (choice != 0)
+	{
+		std::cout << "\n~~~~~~~~~~~~~~~~~~~~HEAP MENU~~~~~~~~~~~~~~~~~~~~\n\t0)Exit\n\t1)Create a max Heap\n\t2)Insert a key in Max Heap\n\t3)Display Max Heap\n\t4)Delete max value\n\t5)Perform heap sort\n\t6)Heapify (faster creation of max heap)\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n";
+
+		std::cin >> choice;
+		switch (choice) 
+		{
+			case 0:
+			{
+				return;
+			}
+			case 1:
+			{
+				//Initialise heap data array
+				int newArr[] = { 10, 20, 30, 25, 5, 40, 35 };
+
+				//Clear the heap 
+				heap->DeleteEntireMaxHeap();
+
+				for (int i = 0; i < sizeof(newArr) / sizeof(newArr[0]); i++)
+				{
+					heap->InsertInMaxHeap(newArr[i]);
+				}
+				break;
+			}
+			case 2:
+			{
+				int key;
+				std::cout << "\nInsert a key: ";
+				std::cin >> key;
+
+				heap->InsertInMaxHeap(key);
+				break;
+			}
+			case 3:
+			{
+				heap->DisplayMaxHeap();
+				break;
+			}
+			case 4:
+			{
+				int deletedValue = heap->DeleteMax();
+
+				std::cout << deletedValue;
+				break;
+			}
+			case 5:
+			{
+				//Initialise new array to get heap sort of
+				int newArr[] = { 40, 20, 15, 60, 45, 50, 5, 70, 100};
+
+				int size = sizeof(newArr) / sizeof(newArr[0]);
+
+				std::cout << "\nArray before heap sorting: ";
+				for (int i = 0; i < size; i++) std::cout << newArr[i] << ", ";
+
+				heap->HeapSort(newArr, size);
+
+				for (int i = 0; i < size; i++) std::cout << newArr[i] << ", ";
+				break;
+			}
+			case 6:
+			{
+				//Initialise new array to get heap sort of
+				//int newArr[] = { 40, 20, 15, 60, 45, 50, 5, 70, 100 };
+				int newArr[] = {5, 10, 30, 20, 35, 40, 15};
+
+				int size = sizeof(newArr) / sizeof(newArr[0]);
+				std::cout << "\nArray before heapify: ";
+
+				for (int i = 0; i < size; i++) std::cout << newArr[i] << ", ";
+
+				//Perform heapify
+				heap->Heapify(newArr, size);
+
+				/*std::cout << "\nArray after heapify:";
+				for (int i = 0; i < size; i++) std::cout << newArr[i] << ", ";*/
+				break;
+			}
+			default:
+			{
+			}
+		}
+	}
+
+}
 int main()
 {
 	int choice = -1;
 	while (choice != 0)
 	{
-		std::cout << "~~~~~~~~~~~~~~~~~~~~Data Structures MENU~~~~~~~~~~~~~~~~~~~~\nChoose the data structure to test:\n\t0) Exit\n\t1)Single Linked List\n\t2)Doubly Linked List\n\t3)Circular Linked List\n\t4)Stack\n\t5)Simple Queue\n\t6)Input-Restricted Queue\n\t7)Output-restricted Queue\n\t8)Double Ended Queue\n\t9)Simple binary tree\n\t10)Binary Search Tree\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+		std::cout << "~~~~~~~~~~~~~~~~~~~~Data Structures MENU~~~~~~~~~~~~~~~~~~~~\nChoose the data structure to test:\n\t0) Exit\n\t1)Single Linked List\n\t2)Doubly Linked List\n\t3)Circular Linked List\n\t4)Stack\n\t5)Simple Queue\n\t6)Input-Restricted Queue\n\t7)Output-restricted Queue\n\t8)Double Ended Queue\n\t9)Simple binary tree\n\t10)Binary Search Tree\n\t11)Heap\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
 
 		std::cin >> choice;
 
@@ -914,6 +1008,11 @@ int main()
 			case 10:
 			{
 				TestBinarySearchTree();
+				break;
+			}
+			case 11:
+			{
+				TestHeap();
 				break;
 			}
 			default:

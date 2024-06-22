@@ -131,6 +131,7 @@
     <ClInclude Include="BinaryTree.h" />
     <ClInclude Include="CustomStack.h" />
     <ClInclude Include="DoubleLinkedList.h" />
+    <ClInclude Include="Heap.h" />
     <ClInclude Include="HelloWorld.h" />
     <ClInclude Include="LinkedList.h" />
     <ClInclude Include="Queue.h" />
@@ -140,6 +141,7 @@
     <ClCompile Include="BinaryTree.cpp" />
     <ClCompile Include="CustomStack.cpp" />
     <ClCompile Include="DoubleLinkedList.cpp" />
+    <ClCompile Include="Heap.cpp" />
     <ClCompile Include="LinkedList.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Queue.cpp" />

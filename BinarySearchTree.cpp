@@ -85,14 +85,14 @@ BSTNode* BinarySearchTree::Delete(BSTNode** temp, int keyToDelete)
 	}
 	else //Node was found i.e keyToDelete == *temp->data
 	{
-		//Delete element from left-subtree or right-subtree based on their height
+		//DeleteMax element from left-subtree or right-subtree based on their height
 		if (Height((*temp)->leftChild) > Height((*temp)->rightChild))
 		{
 			//Find and store the inorder-pre decessor of the node to delete left-subtree
 			BSTNode* leftSubtreeNode = InorderPre((*temp)->leftChild);
 			//Replace node to delete with inorder-pre's data
 			(*temp)->data = leftSubtreeNode->data;
-			//Delete the InOrderPre decessor
+			//DeleteMax the InOrderPre decessor
 			(*temp)->leftChild = Delete(&(*temp)->leftChild, leftSubtreeNode->data);
 		}
 		else
