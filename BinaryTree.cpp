@@ -255,7 +255,107 @@ void BinaryTree::DeleteElement(BTNode** rootNode, int valueToDelete)
 	//Replace node's data with deepest data (thus deleting it)
 	nodeToDelete->data = deepestData;
 
-	//Delete the deepest node now
+	BTNode* deepestNode = temp;
+	BTNode* temp2 = *rootNode;
 
+	BinaryTreeQueue.push(temp2);
 
+	//delete deepest node's connections
+	while (!BinaryTreeQueue.empty())
+	{
+		temp2 = BinaryTreeQueue.front();
+		BinaryTreeQueue.pop();
+
+		if (temp2 == deepestNode)
+		{
+			temp2 = nullptr;
+			delete(deepestNode);
+			std::cout << "\nDeletion task complete..";
+			return;
+		}
+
+		//Right child traversal
+		if (temp2->rightChild != nullptr)
+		{
+			if (temp2->rightChild == deepestNode)
+			{
+				temp2->rightChild = nullptr;
+				delete(deepestNode);
+				std::cout << "\nDeletion task complete..";
+				return;
+			}
+			else
+			{
+				BinaryTreeQueue.push(temp2->rightChild);
+			}
+		}
+		//Left child traversal
+		if (temp2->leftChild != nullptr)
+		{
+			if (temp2->leftChild == deepestNode)
+			{
+				temp2->leftChild = nullptr;
+				delete(deepestNode);
+				std::cout << "\nDeletion task complete..";	
+				return;
+			}
+			else
+			{
+				BinaryTreeQueue.push(temp2->leftChild);
+			}
+		}
+
+		
+	}
+
+	
+
+}
+
+int BinaryTree::Count(BTNode* rootNode)
+{
+	int leftResult, rightResult = 0;
+
+	if (rootNode != nullptr)
+	{
+		leftResult = Count(rootNode->leftChild);
+		rightResult = Count(rootNode->rightChild);
+		return leftResult + rightResult + 1;
+	}
+
+	return 0;
+}
+
+int BinaryTree::CountLeafNodes(BTNode* rootNode)
+{
+	int leftResult, rightResult = 0;
+
+	if (rootNode != nullptr)
+	{
+		leftResult = CountLeafNodes(rootNode->leftChild);
+		rightResult = CountLeafNodes(rootNode->rightChild);
+
+		//If a leaf node, provide itself as a count increment
+		if (!rootNode->leftChild && !rootNode->rightChild) return leftResult + rightResult + 1;
+		else return leftResult + rightResult;
+	}
+	return 0;
+}
+
+int BinaryTree::CalcHeight(BTNode* rootNode)
+{
+	int leftResult, rightResult = 0;
+
+	if (rootNode != nullptr)
+	{
+		//Post-order traversal
+		leftResult = CalcHeight(rootNode->leftChild);
+		rightResult = CalcHeight(rootNode->rightChild);
+		
+		//If left result is greater, use that result and include current node as an increment as well
+		if (leftResult > rightResult) return leftResult + 1;
+		else return rightResult + 1;
+	}
+
+	return 0;
 }

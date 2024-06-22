@@ -34,5 +34,10 @@ public:
 	void LevelOrderTraversal(BTNode* rootNode);
 
 	void DeleteElement(BTNode** rootNode, int valueToDelete);
+
+	//This recursive function results in a total count of nodes in the binary tree
+	int Count(BTNode* rootNode);
+	int CountLeafNodes(BTNode* rootNode);
+	int CalcHeight(BTNode* rootNode);
 };
 

@@ -7,6 +7,7 @@
 #include "DoubleLinkedList.h"
 #include "Queue.h"
 #include "BinaryTree.h"
+#include "BinarySearchTree.h"
 
 void TestLinkedList()
 {
@@ -684,7 +685,7 @@ void TestBinaryTree()
 	int choice = -1;
 	while (choice != 0)
 	{
-		std::cout << "\n~~~~~~~~~~~~~~~~~~~~BINARY TREE MENU~~~~~~~~~~~~~~~~~~~~\n\t0)Exit\n\t1)Insert Value\n\t2)(Recursive)Pre-Order Traversal\n\t3)(Recursive)Post-Order Traversal\n\t4)(Recursive) In-Order Traversal\n\t5)(Non-Recursive)Pre-Order Traversal\n\t6)(Non-Recursive)[NOT IMPLEMENTED] Post-Order Traversal\n\t7)(Non-Recursive) In-Order Traversal\n\t8)Level-Order Traversal (BFS)\n\t9)Delete an element in the Binary Tree\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+		std::cout << "\n~~~~~~~~~~~~~~~~~~~~BINARY TREE MENU~~~~~~~~~~~~~~~~~~~~\n\t0)Exit\n\t1)Insert Value\n\t2)(Recursive)Pre-Order Traversal\n\t3)(Recursive)Post-Order Traversal\n\t4)(Recursive) In-Order Traversal\n\t5)(Non-Recursive)Pre-Order Traversal\n\t6)(Non-Recursive)[NOT IMPLEMENTED] Post-Order Traversal\n\t7)(Non-Recursive) In-Order Traversal\n\t8)Level-Order Traversal (BFS)\n\t9)[NOT IMPLEMENTED] Delete an element in the Binary Tree\n\t10)Find total number of elements\n\t11)Find leaf nodes of tree\n\t12)Find height of the tree\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
 
 		std::cin >> choice;
 
@@ -751,8 +752,36 @@ void TestBinaryTree()
 			std::cout << "\nEnter the node you want to delete" << std::endl;
 			std::cin >> valueToDelete;
 
-
+			tree->DeleteElement(&root, valueToDelete);
 			break;
+		}
+		case 10:
+		{
+			int totalCount = 0;
+
+			totalCount = tree->Count(root);
+
+			std::cout << "\nTotal number of the elements: " << totalCount;
+			break;
+		}
+		case 11:
+		{
+			int totalCount = 0;
+
+			totalCount = tree->CountLeafNodes(root);
+
+			std::cout << "\nTotal leaf-nodes of the binary Tree: " << totalCount;
+			break;
+		}
+		case 12:
+		{
+			int totalCount = 0;
+
+			totalCount = tree->CalcHeight(root);
+
+			std::cout << "\nTotal height of the binary Tree: " << totalCount;
+			break;
+			
 		}
 		default:
 		{
@@ -763,12 +792,69 @@ void TestBinaryTree()
 
 }
 
+void TestBinarySearchTree()
+{
+	//Create the tree
+	BinarySearchTree* tree = new BinarySearchTree();
+
+	//Create empty root node
+	BSTNode* root = nullptr;
+
+	system("cls");
+
+	int choice = -1;
+	while (choice != 0)
+	{
+		std::cout << "\n~~~~~~~~~~~~~~~~~~~~BINARY SEARCH TREE MENU~~~~~~~~~~~~~~~~~~~~\n\t0)Exit\n\t1)Insert Value\n\t2)Level-Order Traversal (BFS)\n\t3)Delete an element\n\t4)In-order traversal\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+
+		std::cin >> choice;
+
+		switch (choice)
+		{
+			case 0:
+			{
+				return;
+			}
+			case 1:
+			{
+				std::cout << "\nEnter a value to insert into binary tree: ";
+				int valueToPush = -1;
+				std::cin >> valueToPush;
+
+				tree->Insert(&root, valueToPush);
+				break;
+			}
+			case 2:
+			{
+				tree->LevelOrderTraversal(root);
+				break;
+			}
+			case 3:
+			{
+				std::cout << "\nEnter a value to delete from binary tree: ";
+				int valueToDelete = -1;
+				std::cin >> valueToDelete;
+
+				tree->Delete(&root, valueToDelete);
+			}
+			case 4:
+			{
+				tree->InOrderTraversal(root);
+			}
+			default:
+			{
+				break;
+			}
+		}
+	}
+}
+
 int main()
 {
 	int choice = -1;
 	while (choice != 0)
 	{
-		std::cout << "~~~~~~~~~~~~~~~~~~~~Data Structures MENU~~~~~~~~~~~~~~~~~~~~\nChoose the data structure to test:\n\t0) Exit\n\t1)Single Linked List\n\t2)Doubly Linked List\n\t3)Circular Linked List\n\t4)Stack\n\t5)Simple Queue\n\t6)Input-Restricted Queue\n\t7)Output-restricted Queue\n\t8)Double Ended Queue\n\t9)Simple binary tree\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+		std::cout << "~~~~~~~~~~~~~~~~~~~~Data Structures MENU~~~~~~~~~~~~~~~~~~~~\nChoose the data structure to test:\n\t0) Exit\n\t1)Single Linked List\n\t2)Doubly Linked List\n\t3)Circular Linked List\n\t4)Stack\n\t5)Simple Queue\n\t6)Input-Restricted Queue\n\t7)Output-restricted Queue\n\t8)Double Ended Queue\n\t9)Simple binary tree\n\t10)Binary Search Tree\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
 
 		std::cin >> choice;
 
@@ -821,6 +907,11 @@ int main()
 			case 9:
 			{
 				TestBinaryTree();
+				break;
+			}
+			case 10:
+			{
+				TestBinarySearchTree();
 				break;
 			}
 			default:
