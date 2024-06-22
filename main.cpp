@@ -805,7 +805,7 @@ void TestBinarySearchTree()
 	int choice = -1;
 	while (choice != 0)
 	{
-		std::cout << "\n~~~~~~~~~~~~~~~~~~~~BINARY SEARCH TREE MENU~~~~~~~~~~~~~~~~~~~~\n\t0)Exit\n\t1)Insert Value\n\t2)Level-Order Traversal (BFS)\n\t3)Delete an element\n\t4)In-order traversal\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+		std::cout << "\n~~~~~~~~~~~~~~~~~~~~BINARY SEARCH TREE MENU~~~~~~~~~~~~~~~~~~~~\n\t0)Exit\n\t1)Insert Value\n\t2)Level-Order Traversal (BFS)\n\t3)In-order traversal\n\t4)Delete an element\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
 
 		std::cin >> choice;
 
@@ -831,15 +831,17 @@ void TestBinarySearchTree()
 			}
 			case 3:
 			{
+				tree->InOrderTraversal(root);
+				break;
+			}
+			case 4:
+			{
 				std::cout << "\nEnter a value to delete from binary tree: ";
 				int valueToDelete = -1;
 				std::cin >> valueToDelete;
 
 				tree->Delete(&root, valueToDelete);
-			}
-			case 4:
-			{
-				tree->InOrderTraversal(root);
+				break;
 			}
 			default:
 			{

@@ -21,6 +21,7 @@ public:
 	BSTNode* InorderSucc(BSTNode* temp);
 	void InOrderTraversal(BSTNode* root);
 	void LevelOrderTraversal(BSTNode* rootNode);
+	void GenerateTreeFromPreOrder(int preArr[], int size, BSTNode* &root);
 
 };
 

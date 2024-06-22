@@ -1,6 +1,7 @@
 #include "BinarySearchTree.h"
 #include <iostream>
 #include <queue>
+#include <stack>
 
 BSTNode* BinarySearchTree::Search(BSTNode* rootNode, int dataToSearch)
 {
@@ -63,34 +64,42 @@ void BinarySearchTree::Insert(BSTNode** rootNode, int keyToInsert)
 
 BSTNode* BinarySearchTree::Delete(BSTNode** temp, int keyToDelete)
 {
+	//If node is non existent, return;
 	if (temp == nullptr) return nullptr;
 
-	if (!(*temp)->leftChild && !(*temp)->rightChild)
+	//If it is a leaf node, and the node is the nodeToDelete, delete it
+	if (!(*temp)->leftChild && !(*temp)->rightChild && (*temp)->data == keyToDelete)
 	{
 		delete((*temp));
 		return nullptr;
 	}
 
+	//Search on the left-subtree
 	if (keyToDelete < (*temp)->data)
 	{
 		(*temp)->leftChild = Delete(&(*temp)->leftChild, keyToDelete);
-	}
+	}//Search on the right subtree
 	else if(keyToDelete > (*temp)->data)
 	{
 		(*temp)->rightChild = Delete(&(*temp)->rightChild, keyToDelete);
 	}
-	else //Node was found
+	else //Node was found i.e keyToDelete == *temp->data
 	{
 		//Delete element from left-subtree or right-subtree based on their height
 		if (Height((*temp)->leftChild) > Height((*temp)->rightChild))
 		{
+			//Find and store the inorder-pre decessor of the node to delete left-subtree
 			BSTNode* leftSubtreeNode = InorderPre((*temp)->leftChild);
+			//Replace node to delete with inorder-pre's data
 			(*temp)->data = leftSubtreeNode->data;
+			//Delete the InOrderPre decessor
 			(*temp)->leftChild = Delete(&(*temp)->leftChild, leftSubtreeNode->data);
 		}
 		else
 		{
+			//Find and store the inorder-successor of the node to delete's right sub-tree
 			BSTNode* rightSubtreeNode = InorderSucc((*temp)->rightChild);
+
 			(*temp)->data = rightSubtreeNode->data;
 			(*temp)->rightChild = Delete(&(*temp)->rightChild, rightSubtreeNode->data);
 		}
@@ -176,6 +185,46 @@ void BinarySearchTree::LevelOrderTraversal(BSTNode* rootNode)
 		{
 			//Push right child into queue
 			TreeQueue.push(temp->rightChild);
+		}
+	}
+}
+
+void BinarySearchTree::GenerateTreeFromPreOrder(int preArr[], int size, BSTNode* &root)
+{
+	std::stack<BSTNode*> Stack;
+
+	BSTNode* temp = nullptr;
+
+	int preOrderItr = 0;
+
+	//Create root node from first element
+	root = new BSTNode(preArr[preOrderItr++]);
+
+	BSTNode* ptr = root;
+
+	while (preOrderItr < size);
+	{
+		if (preArr[preOrderItr] < ptr->data)
+		{
+			temp = new BSTNode(preArr[preOrderItr++]);
+			ptr->leftChild = temp;
+			Stack.push(ptr);
+			ptr = temp;
+		}
+		else
+		{
+			//Check if new data is within range of top of stack and current node
+			if (preArr[preOrderItr] > ptr->data && preArr[preOrderItr] << Stack.top()->data)
+			{
+				temp = new BSTNode(preArr[preOrderItr++]);
+				ptr->rightChild = temp;
+				ptr = temp;
+			}
+			else
+			{
+				ptr = Stack.top();
+				Stack.pop();
+			}
 		}
 	}
 }
