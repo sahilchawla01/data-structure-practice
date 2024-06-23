@@ -9,6 +9,7 @@
 #include "BinaryTree.h"
 #include "BinarySearchTree.h"
 #include "Heap.h"
+#include "Graph.h"
 
 void TestLinkedList()
 {
@@ -861,7 +862,7 @@ void TestHeap()
 	int choice = -1;
 	while (choice != 0)
 	{
-		std::cout << "\n~~~~~~~~~~~~~~~~~~~~HEAP MENU~~~~~~~~~~~~~~~~~~~~\n\t0)Exit\n\t1)Create a max Heap\n\t2)Insert a key in Max Heap\n\t3)Display Max Heap\n\t4)Delete max value\n\t5)Perform heap sort\n\t6)Heapify (faster creation of max heap)\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n";
+		std::cout << "\n~~~~~~~~~~~~~~~~~~~~HEAP MENU~~~~~~~~~~~~~~~~~~~~\n\t0)Exit\n\t1)Create a max Heap\n\t2)Insert a key in Max Heap\n\t3)Display Max Heap\n\t4)Delete max value\n\t5)Perform heap sort\n\t6)[NOT CORRECTLY WORKING]Heapify (faster creation of max heap)\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n";
 
 		std::cin >> choice;
 		switch (choice) 
@@ -945,12 +946,57 @@ void TestHeap()
 	}
 
 }
+
+void TestGraph()
+{
+	system("cls");
+
+	std::cout << "\nTo start, how many vertices in your graph?: ";
+	int numVertices;
+	std::cin >> numVertices;
+
+	Graph* graph = new Graph(numVertices);
+
+	//Now, create the graph
+
+	system("cls");
+
+
+	int choice = -1;
+	while (choice != 0)
+	{
+		std::cout << "\n~~~~~~~~~~~~~~~~~~~~GRAPH MENU~~~~~~~~~~~~~~~~~~~~\n\t0)Exit\n\t1)Display the graph\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n";
+
+		std::cin >> choice;
+		switch (choice)
+		{
+		case 0:
+		{
+			return;
+		}
+		case 1:
+		{
+
+		}
+		case 2:
+		{
+
+		}
+		default:
+		{
+
+		}
+		}
+	}
+}
+
+
 int main()
 {
 	int choice = -1;
 	while (choice != 0)
 	{
-		std::cout << "~~~~~~~~~~~~~~~~~~~~Data Structures MENU~~~~~~~~~~~~~~~~~~~~\nChoose the data structure to test:\n\t0) Exit\n\t1)Single Linked List\n\t2)Doubly Linked List\n\t3)Circular Linked List\n\t4)Stack\n\t5)Simple Queue\n\t6)Input-Restricted Queue\n\t7)Output-restricted Queue\n\t8)Double Ended Queue\n\t9)Simple binary tree\n\t10)Binary Search Tree\n\t11)Heap\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+		std::cout << "~~~~~~~~~~~~~~~~~~~~Data Structures MENU~~~~~~~~~~~~~~~~~~~~\nChoose the data structure to test:\n\t0) Exit\n\t1)Single Linked List\n\t2)Doubly Linked List\n\t3)Circular Linked List\n\t4)Stack\n\t5)Simple Queue\n\t6)Input-Restricted Queue\n\t7)Output-restricted Queue\n\t8)Double Ended Queue\n\t9)Simple binary tree\n\t10)Binary Search Tree\n\t11)Heap\n\t12)Graph\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
 
 		std::cin >> choice;
 
@@ -1013,6 +1059,11 @@ int main()
 			case 11:
 			{
 				TestHeap();
+				break;
+			}
+			case 12:
+			{
+				TestGraph();
 				break;
 			}
 			default:
