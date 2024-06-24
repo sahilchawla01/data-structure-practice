@@ -52,7 +52,7 @@ int Queue::Dequeue()
 
 	//New front becomes old front's next node
 	front = front->next;
-	//DeleteMax memory for old front node
+	//Delete memory for old front node
 	free(oldFrontNode);
 
 	//Decrement current length of queue
