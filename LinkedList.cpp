@@ -234,6 +234,46 @@ void CircularLinkedList::InsertAtEnd(Node* head, int ValueToBeInserted)
 	
 }
 
+void CircularLinkedList::InsertAtPosition(Node** head, int valueToInsert, int positionToInsert)
+{
+	//Create node
+	Node* nodeToInsert = new Node(valueToInsert);
+
+	if (*head == nullptr)
+	{
+		std::cout << "\nCircular Linked List was null, inserting as root!";
+		*head = nodeToInsert;
+		//Maintain circular property
+		(*head)->next = *head;
+		return;
+	}
+
+	//Hold head temporarily
+	Node* nodeBeforePosition = *head;
+
+	int index = 0;
+	//Find node at positionToInsert
+	while (nodeBeforePosition->next != *head)
+	{
+		if (index == positionToInsert - 1)
+		{
+			break;
+		}
+
+		nodeBeforePosition = nodeBeforePosition->next;
+		index++;
+	}
+
+	Node* nodeAfterPosition = nodeBeforePosition->next;
+
+	//Point node before position to new node
+	nodeBeforePosition->next = nodeToInsert;
+	//New node now points to old next position
+	nodeToInsert->next = nodeAfterPosition;
+
+	std::cout << "\nValue inserted at position: " << positionToInsert << "\n";
+}
+
 void CircularLinkedList::TraverseLinkedList(Node* head)
 {
 	Node* curr = head;
@@ -282,52 +322,81 @@ Node** CircularLinkedList::Search(Node** head, int ValueToBeSearched)
 	return nullptr;
 }
 
-void CircularLinkedList::DeleteNode(Node** head, Node** nodeToBeDeleted)
+void CircularLinkedList::DeleteNode(Node** head, int valueToBeDeleted)
 {
 
 	//If list is empty
-	if (head == nodeToBeDeleted)
+	if (*head == nullptr)
 	{
 		std::cout << "\n List is empty.. Returning." << std::endl;
 		return;
 	}
 
-	//Find the node before node to be deleted
-	Node** prevNode = head;
 
-	prevNode = &((*head)->next);
-	
-	while ((*prevNode)->next != *nodeToBeDeleted)
+	//If head is to be deleted
+	if ((*head)->val == valueToBeDeleted)
 	{
-		if (prevNode == head)
+		//If only one element exists
+		if ((*head)->next == *head)
 		{
-			std::cout << "\nCouldn't find deleted node's prev node.. Returning" << std::endl;
+			*head = nullptr;
+			std::cout << "\nOnly head exists in the list, and it is the value to be deleted. Deleted.";
 			return;
 		}
+		//Else if more than one element exists, get tail node and point it to next node after head
 
-		prevNode = &((*prevNode)->next);
+		Node** tail = head;
+		//Traverse to tail
+		while ((*tail)->next != *head) *tail = (*tail)->next;
+
+		//Head becomes the next node (new head)
+		*head = (*head)->next;
+		//Point tail to new head
+		(*tail)->next = *head;
 
 	}
 
-	std::cout << "\nNode before deleted node has a value of" << (*prevNode)->val;
+	Node* prevNode = nullptr;
+	Node* nodeToBeDeleted = nullptr;
+	Node* curr = *head;
 
-	//Store the next node of nodeToBeDeleted
-	Node** nextNode = &((*nodeToBeDeleted)->next);
-
-	std::cout << "\nNode after deleted node has a value of" << (*nextNode)->val;
-
-	if (nextNode == nullptr)
+	//Find node to be deleted
+	while (curr->next != *head)
 	{
-		std::cout << "\nThere wasn't a linked node after node that we're deleting.. Returning" << std::endl;
+		//If next node is value to delete, store current and next. 
+		if ((curr->next)->val == valueToBeDeleted)
+		{
+			std::cout << "\nFound node to delete!";
+			nodeToBeDeleted = curr->next;
+			prevNode = curr;
+			break;
+		}
+
+		//Traverse to next node
+		curr = curr->next;
+	}
+
+	//If delete node doesn't exist return it
+	if (nodeToBeDeleted == nullptr)
+	{
+		std::cout << "\nError, node to delete couldn't be found. Returning";
 		return;
 	}
 
-	//Points prev node to next node
-	(*prevNode)->next = *nextNode;
-	//Remove the link of nodeToBeDeleted
-	(*nodeToBeDeleted)->next = nullptr;
+	std::cout << "\nNode before deleted node has a value of" << prevNode->val;
 
-	free(*nodeToBeDeleted);
+	//Store the next node of nodeToBeDeleted
+	Node* nextNode = nodeToBeDeleted->next;
+
+	std::cout << "\nNode after deleted node has a value of" << nextNode->val;
+
+
+	//Points prev node to next node
+	prevNode->next = nextNode;
+	//Remove the link of nodeToBeDeleted
+	nodeToBeDeleted->next = nullptr;
+
+	free(nodeToBeDeleted);
 
 	
 }

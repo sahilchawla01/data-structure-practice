@@ -24,8 +24,10 @@ class CircularLinkedList
 public:
 	void InsertAtStart(Node** head, int ValueToBeInserted);
 	void InsertAtEnd(Node* head, int ValueToBeInserted);
+	// 0 <= positionToInsert < Infinity 
+	void InsertAtPosition(Node** head, int valueToInsert, int positionToInsert);
 	void TraverseLinkedList(Node* head);
 	Node** Search(Node** head, int ValueToBeSearched);
-	void DeleteNode(Node** head, Node** nodeToBeDeleted);
+	void DeleteNode(Node** head, int ValueToBeDeleted);
 };
 

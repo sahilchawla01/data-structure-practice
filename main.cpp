@@ -166,7 +166,7 @@ void TestCircularLinkedList()
 
 	while (choice != -1)
 	{
-		std::cout << "~~~~~~~~~~~~~~~~~Single Linked List Choice~~~~~~~~~~~~~~~\nChoose the method to test:\n\t-1)Exit\n\t1)Traversal\n\t2)Search\n\t3)Insertion at the beginning\n\t4)Insertion at the end\n\t5)Insertion at a position[NOT IMPLEMENTED]\n\t6) Deletion of a node\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+		std::cout << "\n~~~~~~~~~~~~~~~~~Single Linked List Choice~~~~~~~~~~~~~~~\nChoose the method to test:\n\t-1)Exit\n\t1)Traversal\n\t2)Search\n\t3)Insertion at the beginning\n\t4)Insertion at the end\n\t5)Insertion at a position\n\t6) Deletion of a node\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
 
 		std::cin >> choice;
 
@@ -208,16 +208,20 @@ void TestCircularLinkedList()
 			break;
 		}
 		case 5: //Insertion at the position
-		{/*
+		{
 			int valueToBeInserted = 0;
 			int position = 0;
-			std::cout << "InsertInMaxHeap value :";
+			std::cout << "Insert value :";
 			std::cin >> valueToBeInserted;
-			std::cout << "InsertInMaxHeap position :";
+			std::cout << "Insert position (Range: 1 to Infinity):";
 			std::cin >> position;
 
-			singleCircularLinkedListCla ss->insertAtPosition(head, position, valueToBeInserted);
-			*/
+			if (position < 1)
+			{
+				std::cout << "\nError, enter a position between 1 and infinity only";
+				break;
+			}
+			singleCircularLinkedListClass->InsertAtPosition(&head, valueToBeInserted, position);
 			break;
 		}
 		case 6:
@@ -226,17 +230,8 @@ void TestCircularLinkedList()
 			std::cout << "\nInsert value to be deleted" << std::endl;
 			std::cin >> valueToBeDeleted;
 
-			//First find that node
-			Node** nodeToBeDeleted = singleCircularLinkedListClass->Search(&head, valueToBeDeleted);
-
-			if (nodeToBeDeleted == nullptr)
-			{
-				std::cout << "\nCouldn't find node to be deleted.. Returning" << std::endl;
-				break;
-			}
-
-			//DeleteMax the node
-			singleCircularLinkedListClass->DeleteNode(&head, nodeToBeDeleted);
+			//Delete the node
+			singleCircularLinkedListClass->DeleteNode(&head, valueToBeDeleted);
 
 			break;
 			}
