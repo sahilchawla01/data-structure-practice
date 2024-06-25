@@ -22,7 +22,13 @@ public:
 
 	void CreateGraph();
 	void DisplayGraph();
+	//Do a breadth first search
+	void PerformBFS();
 private:
+
+	bool CheckIfConnectionExists(int OriginalVertexIndex, int CheckVertexData);
+
+
 	int numVertices;
 };
 

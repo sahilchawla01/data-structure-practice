@@ -219,8 +219,8 @@ void BinaryTree::DeleteElement(BTNode** rootNode, int valueToDelete)
 	//Store the node to be deleted, and its parent
 	//Continue traversing until deepest right most node is found
 
-	BTNode** temp = rootNode;
-	std::queue<BTNode**> BinaryTreeQueue;
+	BTNode* temp = *rootNode;
+	std::queue<BTNode*> BinaryTreeQueue;
 
 	BTNode* nodeToDelete = nullptr;
 
@@ -232,18 +232,18 @@ void BinaryTree::DeleteElement(BTNode** rootNode, int valueToDelete)
 		temp = BinaryTreeQueue.front();
 		BinaryTreeQueue.pop();
 
-		if ((*temp)->data = valueToDelete)
-			nodeToDelete = *temp;
+		if (temp->data = valueToDelete)
+			nodeToDelete = temp;
 
-		if ((*temp)->leftChild != nullptr)
-			BinaryTreeQueue.push(&(*temp)->leftChild);
+		if (temp->leftChild != nullptr)
+			BinaryTreeQueue.push(temp->leftChild);
 
-		if ((*temp)->rightChild != nullptr)
-			BinaryTreeQueue.push(&(*temp)->rightChild);
+		if (temp->rightChild != nullptr)
+			BinaryTreeQueue.push(temp->rightChild);
 	}
 
 	//By the end of the traversal, temp stores the final deepest right-most node
-	std::cout << "\nDeepest Right node: " << (*temp)->data;
+	std::cout << "\nDeepest Right node: " << temp->data;
 
 	if (nodeToDelete == nullptr)
 	{
@@ -252,7 +252,7 @@ void BinaryTree::DeleteElement(BTNode** rootNode, int valueToDelete)
 	}
 
 	//If node to delete is the same as the deepest-right most node, remove it directly
-	if (nodeToDelete == *temp)
+	if (nodeToDelete == temp)
 	{
 		std::cout << "\nNode to delete is deepest-right node, deletion performed.";
 		delete(nodeToDelete);
@@ -260,14 +260,14 @@ void BinaryTree::DeleteElement(BTNode** rootNode, int valueToDelete)
 	}
 
 	//Store deepest data
-	int deepestData = (*temp)->data;
+	int deepestData = temp->data;
 	//Replace node's data with deepest data (thus deleting it)
 	nodeToDelete->data = deepestData;
 
-	BTNode* deepestNode = *temp;
+	BTNode* deepestNode = temp;
 
 	//Reset temp to root
-	temp = rootNode;
+	temp = *rootNode;
 
 	BinaryTreeQueue.push(temp);
 
@@ -277,7 +277,7 @@ void BinaryTree::DeleteElement(BTNode** rootNode, int valueToDelete)
 		temp = BinaryTreeQueue.front();
 		BinaryTreeQueue.pop();
 
-		if (*temp == deepestNode)
+		if (temp == deepestNode)
 		{
 			temp = nullptr;
 			delete(deepestNode);
@@ -286,33 +286,33 @@ void BinaryTree::DeleteElement(BTNode** rootNode, int valueToDelete)
 		}
 
 		//Left child traversal
-		if ((*temp)->leftChild != nullptr)
+		if ((temp)->leftChild != nullptr)
 		{
-			if ((*temp)->leftChild == deepestNode)
+			if ((temp)->leftChild == deepestNode)
 			{
-				(*temp)->leftChild = nullptr;
+				(temp)->leftChild = nullptr;
 				delete(deepestNode);
 				std::cout << "\nDeletion task complete..";
 				return;
 			}
 			else
 			{
-				BinaryTreeQueue.push(&(*temp)->leftChild);
+				BinaryTreeQueue.push((temp)->leftChild);
 			}
 		}
 		//Right child traversal
-		if ((*temp)->rightChild != nullptr)
+		if ((temp)->rightChild != nullptr)
 		{
-			if ((*temp)->rightChild == deepestNode)
+			if ((temp)->rightChild == deepestNode)
 			{
-				(*temp)->rightChild = nullptr;
+				(temp)->rightChild = nullptr;
 				delete(deepestNode);
 				std::cout << "\nDeletion task complete..";
 				return;
 			}
 			else
 			{
-				BinaryTreeQueue.push(&(*temp)->rightChild);
+				BinaryTreeQueue.push(temp->rightChild);
 			}
 		}
 	
