@@ -29,13 +29,17 @@ public:
 	void DisplayGraph();
 	//Do a breadth first search
 	void PerformBFS();
-	void PerformDFS();
+	//Driver for DFS
+	void StartDFS();
+	//Recursive Workhorse for DFS
+	void PerformDFS(Vertex* vertexNode);
+
+	Vertex* SearchVertices(int vertexData);
 private:
 
 	bool CheckIfConnectionExists(int OriginalVertexIndex, int CheckVertexData);
 	void UnvisitAllVertices();
 	Vertex* SearchVertices(int vertexData, int& vertexIndex);
-	Vertex* SearchVertices(int vertexData);
 
 	int numVertices;
 };

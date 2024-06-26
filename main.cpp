@@ -960,7 +960,7 @@ void TestGraph()
 	int choice = -1;
 	while (choice != 0)
 	{
-		std::cout << "\n~~~~~~~~~~~~~~~~~~~~GRAPH MENU~~~~~~~~~~~~~~~~~~~~\n\t0)Exit\n\t1)Display the graph\n\t2)Perform BFS traversal\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n";
+		std::cout << "\n~~~~~~~~~~~~~~~~~~~~GRAPH MENU~~~~~~~~~~~~~~~~~~~~\n\t0)Exit\n\t1)Display the graph\n\t2)Perform BFS traversal\n\t3)Perform DFS traversal\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n";
 
 		std::cin >> choice;
 		switch (choice)
@@ -977,6 +977,14 @@ void TestGraph()
 		case 2:
 		{
 			graph->PerformBFS();
+			break;
+		}
+		case 3:
+		{
+			system("cls");
+			
+			graph->StartDFS();
+			break;
 		}
 		default:
 		{

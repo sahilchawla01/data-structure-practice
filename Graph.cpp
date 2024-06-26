@@ -1,6 +1,7 @@
 #include "Graph.h"
 
 #include <queue>
+#include <stack>
 
 
 Graph::Graph(int numberOfVertices)
@@ -176,8 +177,46 @@ void Graph::PerformBFS()
 
 }
 
-void Graph::PerformDFS()
+void Graph::StartDFS()
 {
+	std::cout << "\nTo perform DFS, enter the root vertex: ";
+	int rootVertexData;
+	std::cin >> rootVertexData;
+
+	std::cout << "\n\DFS: ";
+
+	//Start dfs from root node
+	PerformDFS(SearchVertices(rootVertexData));
+
+	//After DFS is done, unvisit all vertices
+	UnvisitAllVertices();
+}
+
+void Graph::PerformDFS(Vertex* vertexNode)
+{
+
+	/*--PSEUDO CODE--
+	1) Check if not visited
+	2) If not, visit it
+	3) For that node, iterate through the adjacency list
+	4) Find each node, and check if not visited, if not, call DFS on that node
+	*/
+
+	//Visit root if not visited
+	if (!vertexNode->bVisited)
+	{
+		//Visit the node
+		std::cout << vertexNode->vertexData << ", ";
+		vertexNode->bVisited = true;
+
+		for (int& connectedVertex : adjList[vertexNode->vertexAdjListIndex])
+		{
+			Vertex* connectedNode = SearchVertices(connectedVertex);
+
+			if (!connectedNode->bVisited) PerformDFS(connectedNode);
+		}
+	}
+
 }
 
 bool Graph::CheckIfConnectionExists(int OriginalVertexIndex, int CheckVertexData)
