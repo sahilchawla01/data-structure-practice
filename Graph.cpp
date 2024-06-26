@@ -1,17 +1,10 @@
 #include "Graph.h"
-#include <iostream>
+
 #include <queue>
+
 
 Graph::Graph(int numberOfVertices)
 {
-	graphArr = new Vertex*[numberOfVertices];
-
-	//Initialise each vertex to be nullptr
-	for (int i = 0; i < numberOfVertices; i++)
-	{
-		*(graphArr + i) = nullptr;
-	}
-
 	numVertices = numberOfVertices;
 
 	//Now actually create the graph
@@ -34,14 +27,18 @@ void Graph::CreateGraph()
 		Vertex* temp = new Vertex(vertexId);
 
 		//Store the new node
-		graphArr[i] = temp;
+		verticesArr.push_back(temp);
+
+		std::list<int> vertexConnectionsList;
+		//Also create the lists for each vertex
+		adjList.push_back(vertexConnectionsList);
 	}
 
 	//Second, now iterate through array of vertices and ask for which connections should be made
 	for (int i = 0; i < numVertices; i++)
 	{
 		//Store the node according to index
-		Vertex* currentVertex = *(graphArr + i);
+		Vertex* currentVertex = verticesArr[i];
 
 		std::cout << "\n\nFor the vertex(" << currentVertex->vertexData << "), enter the connections:\n";
 		int vertexToConnect = 0;
@@ -67,15 +64,8 @@ void Graph::CreateGraph()
 				continue;
 			}
 
-			//Create a new node for that vertex
-			Vertex* newNodeToConnect = new Vertex(vertexToConnect);
-
-			//Traverse to last element
-			Vertex* lastVertex = currentVertex;
-			while (lastVertex->connectedVertex != nullptr) lastVertex = lastVertex->connectedVertex;
-
-			//Connect the currentVertex's next open slot to new node
-			lastVertex->connectedVertex = newNodeToConnect;
+			//Add new vertex to adjacency list for that specific node
+			adjList[i].push_back(vertexToConnect);
 
 			std::cout << "\nVertex connected!";
 		}
@@ -90,19 +80,22 @@ void Graph::DisplayGraph()
 {
 	for (int i = 0; i < numVertices; i++)
 	{
-		//Get node according to index
-		Vertex* temp = *(graphArr + i);
+		//Get root node according to index
+		Vertex* temp = verticesArr[i];
 
 		if (temp == nullptr) continue;
 
-		std::cout << "\nVertex:" ;
-		while (temp != nullptr)
-		{
-			if(temp->connectedVertex != nullptr) std::cout << "(" << temp->vertexData << ")->";
-			else std::cout << "(" << temp->vertexData << ")";
+		std::cout << "\nVertex: " << "(" << temp->vertexData << ")->";
 
-			temp = temp->connectedVertex;
+		for (int& connectedVertex : adjList[i])
+		{
+			//If last element is not current element print arrow
+			if(adjList[i].back() != connectedVertex)
+				std::cout << "(" << connectedVertex << ")->";
+			else 
+				std::cout << "(" << connectedVertex << ")";
 		}
+
 		std::cout << std::endl;
 	}
 }
@@ -128,14 +121,8 @@ void Graph::PerformBFS()
 	//Traverse all the root vertices in the list, and store its index
 	int rootVertexIndex = -1;
 	
-	for (int itr = 0; itr < numVertices; itr++)
-	{
-		//Get root vertex
-		Vertex* curr = *(graphArr + itr);
-
-		//If root vertex is found, store index
-		if(curr->vertexData == rootVertexData) rootVertexIndex = itr;
-	}
+	//Store root vertex's index and root node
+	Vertex* rootVertex = SearchVertices(rootVertexData, rootVertexIndex);
 
 	if (rootVertexIndex == -1)
 	{
@@ -143,51 +130,66 @@ void Graph::PerformBFS()
 		return;
 	}
 
-	//Store root vertex
-	Vertex* rootVertex = *(graphArr + rootVertexIndex);
-
 	//Visit root
-	std::cout << "\n\nBFS: " << rootVertex->vertexData;
+	std::cout << "\n\nBFS\nLevel (0): " << rootVertex->vertexData;
 	rootVertex->bVisited = true;
 
-	std::queue<Vertex*> bfsQueue;
-	//Enqueue root node
-	bfsQueue.push(rootVertex);
+	std::queue<int> bfsQueue;
+	//Enqueue root node's data
+	bfsQueue.push(rootVertex->vertexData);
 
+	//Now any node visited has a level of 1 or greater
+	int bfsLevel = 1;
 	while (!bfsQueue.empty())
 	{
 		//Dequeue node and store it
-		Vertex* currVertex = bfsQueue.front();
+		int currVertex = bfsQueue.front();
 		bfsQueue.pop();
 
-		while (currVertex != nullptr)
+		int currVertexArrIndex = -1;
+
+		//Store current vertex arr index
+		SearchVertices(currVertex, currVertexArrIndex);
+
+		std::cout << "\nLevel (" << bfsLevel << "): ";
+		//Enqueue its connections 
+		for (int& connectedVertex : adjList[currVertexArrIndex])
 		{
-			//If already visited go to next node
-			if (currVertex->bVisited)
+			//Get current vertex node
+			Vertex* temp = SearchVertices(connectedVertex);
+
+			if (temp->bVisited)
 			{
-				//Go to next node
-				currVertex = currVertex->connectedVertex;
+				//Go to next node in queue
 				continue;
 			}
 
-			//If not visited print it and enqueue it
-			std::cout << ", " << currVertex->vertexData;
-
-			//Enable visited for that node
-			currVertex->bVisited = true;
-
-			//Go to next node
-			currVertex = currVertex->connectedVertex;
+			//ELse if not visited, visit it 
+			temp->bVisited = true;
+			std::cout << temp->vertexData << ", ";
+			
+			//Enqueue the node
+			bfsQueue.push(connectedVertex);
 		}
+
+		//Increment level
+		bfsLevel++;
 	}
 
+	//Remove visited status for next traversal
+	UnvisitAllVertices();
 
+}
+
+void Graph::PerformDFS()
+{
 }
 
 bool Graph::CheckIfConnectionExists(int OriginalVertexIndex, int CheckVertexData)
 {
+
 	//Store the vertex whose connections must be checked
-	Vertex* vertexToCheck = graphArr[OriginalVertexIndex];
+	Vertex* vertexToCheck = verticesArr[OriginalVertexIndex];
 
 	if (!vertexToCheck)
 	{
@@ -195,13 +197,53 @@ bool Graph::CheckIfConnectionExists(int OriginalVertexIndex, int CheckVertexData
 		return false;
 	}
 
-	while (vertexToCheck != nullptr)
-	{
-		//If vertex found, return true
-		if (vertexToCheck->vertexData == CheckVertexData) return true;
-
-		vertexToCheck = vertexToCheck->connectedVertex;
-	}
+	//For all vertices in the adjacency list of specified vertex, check if the vertex already exists
+	for (int& vertex : adjList[OriginalVertexIndex]) if (vertex == CheckVertexData) return true;
 
 	return false;
+}
+
+void Graph::UnvisitAllVertices()
+{
+	for (int itr = 0; itr < numVertices; itr++)
+	{
+		//Get root vertex
+		Vertex* curr = verticesArr[itr];
+
+		curr->bVisited = false;
+	}
+
+}
+
+Vertex* Graph::SearchVertices(int vertexData, int& vertexIndex)
+{
+	vertexIndex = -1;
+
+	for (int itr = 0; itr < numVertices; itr++)
+	{
+		Vertex* curr = verticesArr[itr];
+
+		if (curr->vertexData == vertexData)
+		{
+			vertexIndex = itr;
+			return curr;
+		}
+	}
+
+	return nullptr;
+}
+
+Vertex* Graph::SearchVertices(int vertexData)
+{
+	for (int itr = 0; itr < numVertices; itr++)
+	{
+		Vertex* curr = verticesArr[itr];
+
+		if (curr->vertexData == vertexData)
+		{
+			return curr;
+		}
+	}
+
+	return nullptr;
 }
