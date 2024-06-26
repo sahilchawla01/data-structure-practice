@@ -6,10 +6,11 @@
 struct Vertex
 {
 	int vertexData;
+	int vertexAdjListIndex;
 	bool bVisited; 
 
-	Vertex() : vertexData(-1), bVisited(false) {};
-	Vertex(int vData) : vertexData(vData), bVisited(false) {};
+	Vertex() : vertexData(-1), vertexAdjListIndex(-1), bVisited(false) {};
+	Vertex(int vData, int index) : vertexData(vData), vertexAdjListIndex(index), bVisited(false) {};
 };
 
 

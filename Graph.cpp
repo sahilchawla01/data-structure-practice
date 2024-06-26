@@ -24,7 +24,7 @@ void Graph::CreateGraph()
 		std::cin >> vertexId;
 
 		//Create and set the node
-		Vertex* temp = new Vertex(vertexId);
+		Vertex* temp = new Vertex(vertexId, i);
 
 		//Store the new node
 		verticesArr.push_back(temp);
@@ -134,28 +134,23 @@ void Graph::PerformBFS()
 	std::cout << "\n\nBFS\nLevel (0): " << rootVertex->vertexData;
 	rootVertex->bVisited = true;
 
-	std::queue<int> bfsQueue;
+	std::queue<Vertex*> bfsQueue;
 	//Enqueue root node's data
-	bfsQueue.push(rootVertex->vertexData);
+	bfsQueue.push(rootVertex);
 
 	//Now any node visited has a level of 1 or greater
 	int bfsLevel = 1;
 	while (!bfsQueue.empty())
 	{
 		//Dequeue node and store it
-		int currVertex = bfsQueue.front();
+		Vertex* currVertex = bfsQueue.front();
 		bfsQueue.pop();
-
-		int currVertexArrIndex = -1;
-
-		//Store current vertex arr index
-		SearchVertices(currVertex, currVertexArrIndex);
 
 		std::cout << "\nLevel (" << bfsLevel << "): ";
 		//Enqueue its connections 
-		for (int& connectedVertex : adjList[currVertexArrIndex])
+		for (int& connectedVertex : adjList[currVertex->vertexAdjListIndex])
 		{
-			//Get current vertex node
+			//Get current connected vertex
 			Vertex* temp = SearchVertices(connectedVertex);
 
 			if (temp->bVisited)
@@ -169,7 +164,7 @@ void Graph::PerformBFS()
 			std::cout << temp->vertexData << ", ";
 			
 			//Enqueue the node
-			bfsQueue.push(connectedVertex);
+			bfsQueue.push(temp);
 		}
 
 		//Increment level
