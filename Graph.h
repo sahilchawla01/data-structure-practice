@@ -6,11 +6,14 @@
 struct Vertex
 {
 	int vertexData;
+	//The weight of the vertex 
+	int vertexWeight;
 	int vertexAdjListIndex;
 	bool bVisited; 
 
-	Vertex() : vertexData(-1), vertexAdjListIndex(-1), bVisited(false) {};
-	Vertex(int vData, int index) : vertexData(vData), vertexAdjListIndex(index), bVisited(false) {};
+	Vertex() : vertexData(-1), vertexAdjListIndex(-1), vertexWeight(-1), bVisited(false) {};
+	Vertex(int vData, int index) : vertexData(vData), vertexAdjListIndex(index), vertexWeight(-1), bVisited(false) {};
+	Vertex(int vData, int index, int vWeight) : vertexData(vData), vertexAdjListIndex(index), vertexWeight(vWeight), bVisited(false) {};
 };
 
 
@@ -33,6 +36,7 @@ public:
 	void StartDFS();
 	//Recursive Workhorse for DFS
 	void PerformDFS(Vertex* vertexNode);
+	void PerformPrims();
 
 	Vertex* SearchVertices(int vertexData);
 private:
@@ -41,6 +45,8 @@ private:
 	void UnvisitAllVertices();
 	Vertex* SearchVertices(int vertexData, int& vertexIndex);
 
+private:
 	int numVertices;
+	bool bIsDirectedGraph = false;
 };
 

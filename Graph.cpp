@@ -14,6 +14,13 @@ Graph::Graph(int numberOfVertices)
 
 void Graph::CreateGraph()
 {
+	//When creating the graph, initially assume not directed graph
+	bIsDirectedGraph = false;
+
+	std::cout << "\nCreating Graph.. Is this a directed graph? (1 for yes, 0 for no): ";
+	std::cin >> bIsDirectedGraph;
+
+	system("cls");
 	std::cout << "\nNow, enter vertex information..";
 
 	//First, create an array of vertices (without connections)
@@ -24,8 +31,17 @@ void Graph::CreateGraph()
 		int vertexId;
 		std::cin >> vertexId;
 
+		int vertexWeight = -1;
+
+		//If directed graph, enter the weight of the vertex
+		if (bIsDirectedGraph)
+		{
+			std::cout << "\nEnter vertex weight: ";
+			std::cin >> vertexWeight;
+		}
+
 		//Create and set the node
-		Vertex* temp = new Vertex(vertexId, i);
+		Vertex* temp = new Vertex(vertexId, i, vertexWeight);
 
 		//Store the new node
 		verticesArr.push_back(temp);
@@ -217,6 +233,15 @@ void Graph::PerformDFS(Vertex* vertexNode)
 		}
 	}
 
+}
+
+void Graph::PerformPrims()
+{
+	/* --PSEUDO CODE --
+	* 1)Find minimum cost edge and store in minimum spanning tree data struct
+	* 2)Create a near array, and find and store for each vertex, which is the nearest of the minimum cost edge's pair of vertices
+	* 3) 
+	*/
 }
 
 bool Graph::CheckIfConnectionExists(int OriginalVertexIndex, int CheckVertexData)
