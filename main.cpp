@@ -11,6 +11,7 @@
 #include "Heap.h"
 #include "Graph.h"
 #include "HashMap.h"
+#include "Sorting.h"
 
 void TestLinkedList()
 {
@@ -1089,6 +1090,24 @@ void TestGraph()
 
 		}
 		}
+	}
+}
+
+void TestSorting()
+{
+	system("cls");
+
+	LinearProbingHashMap* hashMap = new LinearProbingHashMap(10);
+
+	int choice = -1;
+	while (choice != 0)
+	{
+		std::cout << "\n~~~~~~~~~~~~~~~~~~~~SORTING MENU~~~~~~~~~~~~~~~~~~~~\n\t0)Exit\n\t1)Insert\n\t2)Search\n\t3)Display Entire Hash Table\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n";
+
+		std::cin >> choice;
+
+		//switch (choice)
+		
 	}
 }
 
