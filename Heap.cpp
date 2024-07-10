@@ -152,76 +152,46 @@ void Heap::DeleteEntireMaxHeap()
 
 void Heap::Heapify(int resultantArray[], int size)
 {
-	//-- PSEUDO CODE --
-	//1)Start from the deepest-right most node and work backwards
-	//2)Start loop
-	//3)Does current node have children, no? continue to next node
-	//4)If node has children, compare children, get max
-	//5)Then, compare with node, if child greater, swap.
-	//6)Continue until itr reaches 0
 
+	// -- PSEUDO CODE -- (This algorithm works in reverse, from the last to the first element)
+	//1)Ignoring the leaf nodes, start from the parent of the last leaf node (i.e [N/2] - 1) where N is the number of elements)
+	//2)Start a loop from the parent index
+	//3)Get index of left and right child
+	//4)In a while loop, 
+	//5)store index with maximum value
+	//6)Compare parent with max child value, if parent greater, swap and traverse to next left and right child
 
-	//Clear the heap
-	DeleteEntireMaxHeap();
+	//Store last leaf node's parent (we ignore the leaf nodes) and work in reverse
+	int parentLastLeafNode = static_cast<int>(size / 2) - 1;
 
-	int itr = size - 1;
-
-	while (!(itr < 0))
+	for (int itr = parentLastLeafNode; itr >= 0; itr--)
 	{
-		//std::cout << itr;
-		int possibleLeftChildIndex = GetLeftChild(itr);
-		int possibleRightChildIndex = GetRightChild(itr);
+		int leftChildIndex = GetLeftChild(itr);
+		int righChildIndex = GetRightChild(itr);
 
-		//If left child is beyond array bounds, then it is a leaf node, continue to next iteration
-		if (possibleLeftChildIndex > size - 1)
+		//Get maximum child's index
+		int maxChildIndex = (resultantArray[leftChildIndex] > resultantArray[righChildIndex]) ? leftChildIndex : righChildIndex;
+
+		//While the left child is within the array
+		while (leftChildIndex < size - 1)
 		{
-			itr--;
-			continue;
-		}
+			maxChildIndex = (resultantArray[leftChildIndex] > resultantArray[righChildIndex]) ? leftChildIndex : righChildIndex;
 
-		//If right child is beyond array bounds, simply compare current node with left child
-		if (possibleRightChildIndex > size - 1)
-		{
-			//If left child is greater, swap elements
-			if (resultantArray[possibleLeftChildIndex] > resultantArray[itr])
-			{
-				SwapElements(resultantArray[possibleLeftChildIndex], resultantArray[itr]);
-			}
-			else //If left child not greater, go to next iteration 
-			{
-				itr--;
-				continue;
-			}
-		}
-		else //If both children are in array bounds
-		{
-			//Find and store max child's index
-			int maxChildIndex = (resultantArray[possibleLeftChildIndex] > resultantArray[possibleRightChildIndex]) ? possibleLeftChildIndex : possibleRightChildIndex;
-
-			//Now, compare with current node
-
-			//If child element is found greater, perform swap
+			//Compare max child with parent
 			if (resultantArray[maxChildIndex] > resultantArray[itr])
-				SwapElements(resultantArray[maxChildIndex], resultantArray[itr]);
-			else //If not, continue to next iteration
 			{
-				itr--;
-				continue;
+				SwapElements(resultantArray[maxChildIndex], resultantArray[itr]);
+				//Iterator now points to the swapped child position
+				itr = maxChildIndex;
+				leftChildIndex = GetLeftChild(itr);
+				righChildIndex = GetRightChild(itr);
 			}
+			else
+				break;
 		}
-
-		itr--;
 	}
 
-	//Finally, simply set internal heap
-	for (int i = 0; i < size; i++)
-	{
-		arr[i] = resultantArray[i];
-		heapSize++;
-	}
 
-	std::cout << "\nArray after heapify:";
-	for (int i = 0; i < size; i++) std::cout << resultantArray[i] << ", ";
 }
 
 void Heap::HeapSort(int resultantArray[], int size)

@@ -857,7 +857,7 @@ void TestHeap()
 	int choice = -1;
 	while (choice != 0)
 	{
-		std::cout << "\n~~~~~~~~~~~~~~~~~~~~HEAP MENU~~~~~~~~~~~~~~~~~~~~\n\t0)Exit\n\t1)Create a max Heap\n\t2)Insert a key in Max Heap\n\t3)Display Max Heap\n\t4)Delete max value\n\t5)Perform heap sort\n\t6)[NOT CORRECTLY WORKING]Heapify (faster creation of max heap)\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n";
+		std::cout << "\n~~~~~~~~~~~~~~~~~~~~HEAP MENU~~~~~~~~~~~~~~~~~~~~\n\t0)Exit\n\t1)Create a max Heap\n\t2)Insert a key in Max Heap\n\t3)Display Max Heap\n\t4)Delete max value\n\t5)Perform heap sort\n\t6)Heapify (faster creation of max heap)\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n";
 
 		std::cin >> choice;
 		switch (choice) 
@@ -920,7 +920,7 @@ void TestHeap()
 			{
 				//Initialise new array to get heap sort of
 				//int newArr[] = { 40, 20, 15, 60, 45, 50, 5, 70, 100 };
-				int newArr[] = {5, 10, 30, 20, 35, 40, 15};
+				int newArr[] = {1,8,6,2,3,5};
 
 				int size = sizeof(newArr) / sizeof(newArr[0]);
 				std::cout << "\nArray before heapify: ";
@@ -930,8 +930,8 @@ void TestHeap()
 				//Perform heapify
 				heap->Heapify(newArr, size);
 
-				/*std::cout << "\nArray after heapify:";
-				for (int i = 0; i < size; i++) std::cout << newArr[i] << ", ";*/
+				std::cout << "\nArray after heapify:";
+				for (int i = 0; i < size; i++) std::cout << newArr[i] << ", ";
 				break;
 			}
 			default:
