@@ -132,6 +132,7 @@
     <ClInclude Include="CustomStack.h" />
     <ClInclude Include="DoubleLinkedList.h" />
     <ClInclude Include="Graph.h" />
+    <ClInclude Include="HashMap.h" />
     <ClInclude Include="Heap.h" />
     <ClInclude Include="HelloWorld.h" />
     <ClInclude Include="LinkedList.h" />
@@ -143,6 +144,7 @@
     <ClCompile Include="CustomStack.cpp" />
     <ClCompile Include="DoubleLinkedList.cpp" />
     <ClCompile Include="Graph.cpp" />
+    <ClCompile Include="HashMap.cpp" />
     <ClCompile Include="Heap.cpp" />
     <ClCompile Include="LinkedList.cpp" />
     <ClCompile Include="main.cpp" />

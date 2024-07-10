@@ -10,6 +10,7 @@
 #include "BinarySearchTree.h"
 #include "Heap.h"
 #include "Graph.h"
+#include "HashMap.h"
 
 void TestLinkedList()
 {
@@ -942,6 +943,103 @@ void TestHeap()
 
 }
 
+void TestChainingHashMap()
+{
+	system("cls");
+
+	ChainingHashMap* hashMap = new ChainingHashMap(10);
+
+
+	int choice = -1;
+	while (choice != 0)
+	{
+		std::cout << "\n~~~~~~~~~~~~~~~~~~~~CHAINING HASH MAP MENU~~~~~~~~~~~~~~~~~~~~\n\t0)Exit\n\t1)Insert\n\t2)Search\n\t3)Display Entire Hash Table\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n";
+		
+		std::cin >> choice;
+
+		switch (choice)
+		{
+			case 0:
+			{
+				return;
+			}
+			case 1:
+			{
+				std::cout << "\nInsert an element to put in the hash map: ";
+				int value;
+				std::cin >> value;
+				hashMap->Put(value);
+				break;
+			}
+			case 2:
+			{
+				std::cout << "\nInsert an element to search in the hash map: ";
+				int value;
+				std::cin >> value;
+				hashMap->Search(value);
+				break;
+			}
+			case 3:
+			{
+				hashMap->TestDisplayHashMap();
+				break;
+			}
+			default:
+			{
+
+			}
+		}
+	}
+}
+
+void TestLinearProbingHashMap()
+{
+	system("cls");
+
+	LinearProbingHashMap* hashMap = new LinearProbingHashMap(10);
+
+	int choice = -1;
+	while (choice != 0)
+	{
+		std::cout << "\n~~~~~~~~~~~~~~~~~~~~LINEAR PROBING HASH MAP MENU~~~~~~~~~~~~~~~~~~~~\n\t0)Exit\n\t1)Insert\n\t2)Search\n\t3)Display Entire Hash Table\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n";
+
+		std::cin >> choice;
+
+		switch (choice)
+		{
+		case 0:
+		{
+			return;
+		}
+		case 1:
+		{
+			std::cout << "\nInsert an element to put in the hash map: ";
+			int value;
+			std::cin >> value;
+			hashMap->Put(value);
+			break;
+		}
+		case 2:
+		{
+			std::cout << "\nInsert an element to search in the hash map: ";
+			int value;
+			std::cin >> value;
+			hashMap->Search(value);
+			break;
+		}
+		case 3:
+		{
+			hashMap->TestDisplayHashMap();
+			break;
+		}
+		default:
+		{
+
+		}
+		}
+	}
+}
+
 void TestGraph()
 {
 	system("cls");
@@ -1000,7 +1098,7 @@ int main()
 	int choice = -1;
 	while (choice != 0)
 	{
-		std::cout << "~~~~~~~~~~~~~~~~~~~~Data Structures MENU~~~~~~~~~~~~~~~~~~~~\nChoose the data structure to test:\n\t0) Exit\n\t1)Single Linked List\n\t2)Doubly Linked List\n\t3)Circular Linked List\n\t4)Stack\n\t5)Simple Queue\n\t6)Input-Restricted Queue\n\t7)Output-restricted Queue\n\t8)Double Ended Queue\n\t9)Simple binary tree\n\t10)Binary Search Tree\n\t11)Heap\n\t12)Graph\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+		std::cout << "~~~~~~~~~~~~~~~~~~~~Data Structures MENU~~~~~~~~~~~~~~~~~~~~\nChoose the data structure to test:\n\t0) Exit\n\t1)Single Linked List\n\t2)Doubly Linked List\n\t3)Circular Linked List\n\t4)Stack\n\t5)Simple Queue\n\t6)Input-Restricted Queue\n\t7)Output-restricted Queue\n\t8)Double Ended Queue\n\t9)Simple binary tree\n\t10)Binary Search Tree\n\t11)Heap\n\t12)Graph\n\t13)ChainingHashMap\n\t14)Linear Probing Hash Map\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
 
 		std::cin >> choice;
 
@@ -1068,6 +1166,16 @@ int main()
 			case 12:
 			{
 				TestGraph();
+				break;
+			}
+			case 13:
+			{
+				TestChainingHashMap();
+				break;
+			}
+			case 14:
+			{
+				TestLinearProbingHashMap();
 				break;
 			}
 			default:

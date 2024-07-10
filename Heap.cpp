@@ -155,7 +155,7 @@ void Heap::Heapify(int resultantArray[], int size)
 
 	// -- PSEUDO CODE -- (This algorithm works in reverse, from the last to the first element)
 	//1)Ignoring the leaf nodes, start from the parent of the last leaf node (i.e [N/2] - 1) where N is the number of elements)
-	//2)Start a loop from the parent index
+	//2)Start a loop from the aforementioned parent index
 	//3)Get index of left and right child
 	//4)In a while loop, 
 	//5)store index with maximum value
@@ -175,7 +175,10 @@ void Heap::Heapify(int resultantArray[], int size)
 		//While the left child is within the array
 		while (leftChildIndex < size - 1)
 		{
-			maxChildIndex = (resultantArray[leftChildIndex] > resultantArray[righChildIndex]) ? leftChildIndex : righChildIndex;
+			//If right child index is outside array, max child is left child
+			if (righChildIndex > size - 1) maxChildIndex = leftChildIndex;
+			else //Compare to find max child
+				maxChildIndex = (resultantArray[leftChildIndex] > resultantArray[righChildIndex]) ? leftChildIndex : righChildIndex;
 
 			//Compare max child with parent
 			if (resultantArray[maxChildIndex] > resultantArray[itr])
@@ -190,8 +193,6 @@ void Heap::Heapify(int resultantArray[], int size)
 				break;
 		}
 	}
-
-
 }
 
 void Heap::HeapSort(int resultantArray[], int size)
