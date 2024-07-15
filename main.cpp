@@ -1097,17 +1097,90 @@ void TestSorting()
 {
 	system("cls");
 
-	LinearProbingHashMap* hashMap = new LinearProbingHashMap(10);
+	Sorting sorter;
 
 	int choice = -1;
 	while (choice != 0)
 	{
-		std::cout << "\n~~~~~~~~~~~~~~~~~~~~SORTING MENU~~~~~~~~~~~~~~~~~~~~\n\t0)Exit\n\t1)Insert\n\t2)Search\n\t3)Display Entire Hash Table\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n";
+		std::cout << "\n~~~~~~~~~~~~~~~~~~~~SORTING MENU~~~~~~~~~~~~~~~~~~~~\n\t0)Exit\n\t1)Bubble Sort\n\t2)Insertion Sort\n\t3)Selection Sort\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n";
 
 		std::cin >> choice;
 
-		//switch (choice)
-		
+		switch (choice)
+		{
+			case 0:
+			{
+				return;
+			}
+			case 1:
+			{
+				int arr[] = { 5, 100, 16, 34, 10, 4, 50 };
+				
+				int size =  sizeof(arr) / sizeof(arr[0]) ;
+
+				std::cout << "Array before sorting: ";
+
+				for (int element : arr)
+					std::cout << element << ", ";
+
+				std::cout << std::endl;
+
+				sorter.BubbleSort(arr, size);
+
+				std::cout << "\n\nArray after sorting: ";
+
+				for (int element : arr)
+					std::cout << element << ", ";
+
+				break;
+			}
+			case 2:
+			{
+				int arr[] = { 5, 100, 16, 34, 10, 4, 50 };
+
+				int size = sizeof(arr) / sizeof(arr[0]);
+
+				std::cout << "Array before sorting: ";
+
+				for (int element : arr)
+					std::cout << element << ", ";
+
+				std::cout << std::endl;
+
+				sorter.InsertionSort(arr, size);
+
+				std::cout << "\n\nArray after sorting: ";
+
+				for (int element : arr)
+					std::cout << element << ", ";
+				break;
+			}
+			case 3:
+			{
+				int arr[] = { 5, 100, 16, 34, 10, 4, 50 };
+
+				int size = sizeof(arr) / sizeof(arr[0]);
+
+				std::cout << "Array before sorting: ";
+
+				for (int element : arr)
+					std::cout << element << ", ";
+
+				std::cout << std::endl;
+
+				sorter.SelectionSort(arr, size);
+
+				std::cout << "\n\nArray after sorting: ";
+
+				for (int element : arr)
+					std::cout << element << ", ";
+				break;
+			}
+			default:
+			{
+
+			}
+		}
 	}
 }
 
@@ -1117,7 +1190,7 @@ int main()
 	int choice = -1;
 	while (choice != 0)
 	{
-		std::cout << "~~~~~~~~~~~~~~~~~~~~Data Structures MENU~~~~~~~~~~~~~~~~~~~~\nChoose the data structure to test:\n\t0) Exit\n\t1)Single Linked List\n\t2)Doubly Linked List\n\t3)Circular Linked List\n\t4)Stack\n\t5)Simple Queue\n\t6)Input-Restricted Queue\n\t7)Output-restricted Queue\n\t8)Double Ended Queue\n\t9)Simple binary tree\n\t10)Binary Search Tree\n\t11)Heap\n\t12)Graph\n\t13)ChainingHashMap\n\t14)Linear Probing Hash Map\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+		std::cout << "~~~~~~~~~~~~~~~~~~~~Data Structures MENU~~~~~~~~~~~~~~~~~~~~\nChoose the data structure to test:\n\t0) Exit\n\t1)Single Linked List\n\t2)Doubly Linked List\n\t3)Circular Linked List\n\t4)Stack\n\t5)Simple Queue\n\t6)Input-Restricted Queue\n\t7)Output-restricted Queue\n\t8)Double Ended Queue\n\t9)Simple binary tree\n\t10)Binary Search Tree\n\t11)Heap\n\t12)Graph\n\t13)ChainingHashMap\n\t14)Linear Probing Hash Map\n\t15)Sorting\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
 
 		std::cin >> choice;
 
@@ -1195,6 +1268,11 @@ int main()
 			case 14:
 			{
 				TestLinearProbingHashMap();
+				break;
+			}
+			case 15:
+			{
+				TestSorting();
 				break;
 			}
 			default:
