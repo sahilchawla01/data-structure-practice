@@ -243,12 +243,20 @@ void Graph::PerformDFS(Vertex* vertexNode)
 		std::cout << vertexNode->vertexData << ", ";
 		vertexNode->bVisited = true;
 
-		/*for (int& connectedVertex : adjList[vertexNode->vertexAdjListIndex])
+
+		AdjListNode* curr = adjList[vertexNode->vertexAdjListIndex];
+		//Skip the head
+		curr = curr->next;
+
+		while (curr != nullptr)
 		{
-			Vertex* connectedNode = SearchVertices(connectedVertex);
+			Vertex* connectedNode = SearchVertices(curr->vertexData);
 
 			if (!connectedNode->bVisited) PerformDFS(connectedNode);
-		}*/
+
+			curr = curr->next;
+		}
+
 	}
 
 }
