@@ -137,6 +137,7 @@
     <ClInclude Include="HelloWorld.h" />
     <ClInclude Include="LinkedList.h" />
     <ClInclude Include="Queue.h" />
+    <ClInclude Include="Recursion.h" />
     <ClInclude Include="Sorting.h" />
   </ItemGroup>
   <ItemGroup>
@@ -150,6 +151,7 @@
     <ClCompile Include="LinkedList.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Queue.cpp" />
+    <ClCompile Include="Recursion.cpp" />
     <ClCompile Include="Sorting.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

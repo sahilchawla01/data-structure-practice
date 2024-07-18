@@ -91,6 +91,42 @@ void Sorting::SelectionSort(int arr[], int size)
 	}
 }
 
+void Sorting::QuickSort(int arr[], int size)
+{
+}
+
+int Sorting::QuickSortPartition(int arr[], int low, int high)
+{
+	int pivot = arr[low];
+	int i = low; 
+	int j = high;
+
+	do
+	{
+		do { i++; } while (arr[i] <= pivot);
+		do { j--; } while (arr[j] > pivot);
+
+		if (i < j)
+			Swap(arr[i], arr[j]);
+	} while (i < j);
+
+	Swap(arr[low], arr[j]);
+	
+	return j;
+}
+
+void Sorting::QuickSortRecursive(int arr[], int low, int high)
+{
+	int partitionPos;
+
+	if (low < high)
+	{
+		partitionPos = QuickSortPartition(arr, low, high);
+		QuickSortRecursive(arr, low, partitionPos);
+		QuickSortRecursive(arr, partitionPos + 1, high);
+	}
+}
+
 void Sorting::Swap(int& element1, int& element2)
 {
 	int temp = element1;

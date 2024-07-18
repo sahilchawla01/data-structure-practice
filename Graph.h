@@ -16,6 +16,15 @@ struct Vertex
 	Vertex(int vData, int index, int vWeight) : vertexData(vData), vertexAdjListIndex(index), vertexWeight(vWeight), bVisited(false) {};
 };
 
+struct AdjListNode
+{
+	int vertexData;
+	int vertexWeight;
+	AdjListNode* next;
+
+	AdjListNode(int vData, int vWeight) : vertexData(vData), vertexWeight(vWeight), next(nullptr) {};
+};
+
 
 class Graph
 {
@@ -25,8 +34,8 @@ public:
 
 	//Array of head vertices
 	std::vector<Vertex*> verticesArr;
-	//A vector of vectors of integers that represents each vertice's connections
-	std::vector<std::list<int>> adjList;
+	//A vector of adjlistnodes that represents each vertice's connections
+	std::vector<AdjListNode*> adjList;
 
 	void CreateGraph();
 	void DisplayGraph();

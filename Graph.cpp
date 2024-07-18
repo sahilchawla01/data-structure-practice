@@ -46,9 +46,9 @@ void Graph::CreateGraph()
 		//Store the new node
 		verticesArr.push_back(temp);
 
-		std::list<int> vertexConnectionsList;
+		AdjListNode* rootAdjListNode = new AdjListNode(vertexId, vertexWeight);
 		//Also create the lists for each vertex
-		adjList.push_back(vertexConnectionsList);
+		adjList.push_back(rootAdjListNode);
 	}
 
 	//Second, now iterate through array of vertices and ask for which connections should be made
@@ -58,31 +58,37 @@ void Graph::CreateGraph()
 		Vertex* currentVertex = verticesArr[i];
 
 		std::cout << "\n\nFor the vertex(" << currentVertex->vertexData << "), enter the connections:\n";
-		int vertexToConnect = 0;
+		int vertexToConnectData = 0;
 
-		while (true)
+		//Store current vertex's root adjacent node
+		AdjListNode* headVertex = adjList[i];
+
+		while (headVertex != nullptr)
 		{
 			std::cout << "\nEnter the vertex to connect (-1 to exit insertion for current vertex): ";
-			std::cin >> vertexToConnect;
+			std::cin >> vertexToConnectData;
 
-			if (vertexToConnect == -1) break;
+			if (vertexToConnectData == -1) break;
 
 			//If trying to connect to self, prevent
-			if (vertexToConnect == currentVertex->vertexData)
+			if (vertexToConnectData == currentVertex->vertexData)
 			{
 				std::cout << "\nError, can't connect to self";
 				continue;
 			}
 
 			//Check if connected node already exists
-			if (CheckIfConnectionExists(i, vertexToConnect))
+			if (CheckIfConnectionExists(i, vertexToConnectData))
 			{
 				std::cout << "\nEither vertex is already connected or vertex to connect doesn't exist.. ";
 				continue;
 			}
 
-			//Add new vertex to adjacency list for that specific node
-			adjList[i].push_back(vertexToConnect);
+			Vertex* vertexToConnect = SearchVertices(vertexToConnectData);
+			AdjListNode* vertexAdjNode = new AdjListNode(vertexToConnect->vertexData, vertexToConnect->vertexWeight);
+
+			headVertex->next = vertexAdjNode;
+			headVertex = vertexAdjNode;
 
 			std::cout << "\nVertex connected!";
 		}
@@ -102,16 +108,20 @@ void Graph::DisplayGraph()
 
 		if (temp == nullptr) continue;
 
-		std::cout << "\nVertex: " << "(" << temp->vertexData << ")->";
+		AdjListNode* currAdjListNode = adjList[i];
 
-		for (int& connectedVertex : adjList[i])
+		std::cout << std::endl;
+
+		while (currAdjListNode != nullptr)
 		{
 			//If last element is not current element print arrow
-			if(adjList[i].back() != connectedVertex)
-				std::cout << "(" << connectedVertex << ")->";
-			else 
-				std::cout << "(" << connectedVertex << ")";
-		}
+			if (currAdjListNode->next == nullptr)
+				std::cout << "(" << currAdjListNode->vertexData << "[Weight: " << currAdjListNode->vertexWeight << "])";
+			else
+				std::cout << "(" << currAdjListNode->vertexData << "[Weight: "<< currAdjListNode->vertexWeight<<"])---->";
+
+			currAdjListNode = currAdjListNode->next;
+		};
 
 		std::cout << std::endl;
 	}
@@ -165,13 +175,18 @@ void Graph::PerformBFS()
 
 		std::cout << "\nLevel (" << bfsLevel << "): ";
 		//Enqueue its connections 
-		for (int& connectedVertex : adjList[currVertex->vertexAdjListIndex])
-		{
+		
+		AdjListNode* headAdjNode = adjList[currVertex->vertexAdjListIndex];
+
+		while(headAdjNode != nullptr)
+		{ 
 			//Get current connected vertex
-			Vertex* temp = SearchVertices(connectedVertex);
+			Vertex* temp = SearchVertices(headAdjNode->vertexData);
 
 			if (temp->bVisited)
 			{
+				//Traverse to next 
+				headAdjNode = headAdjNode->next;
 				//Go to next node in queue
 				continue;
 			}
@@ -179,9 +194,12 @@ void Graph::PerformBFS()
 			//ELse if not visited, visit it 
 			temp->bVisited = true;
 			std::cout << temp->vertexData << ", ";
-			
+
 			//Enqueue the node
 			bfsQueue.push(temp);
+
+			//Traverse to next 
+			headAdjNode = headAdjNode->next;
 		}
 
 		//Increment level
@@ -225,12 +243,12 @@ void Graph::PerformDFS(Vertex* vertexNode)
 		std::cout << vertexNode->vertexData << ", ";
 		vertexNode->bVisited = true;
 
-		for (int& connectedVertex : adjList[vertexNode->vertexAdjListIndex])
+		/*for (int& connectedVertex : adjList[vertexNode->vertexAdjListIndex])
 		{
 			Vertex* connectedNode = SearchVertices(connectedVertex);
 
 			if (!connectedNode->bVisited) PerformDFS(connectedNode);
-		}
+		}*/
 	}
 
 }
@@ -257,7 +275,14 @@ bool Graph::CheckIfConnectionExists(int OriginalVertexIndex, int CheckVertexData
 	}
 
 	//For all vertices in the adjacency list of specified vertex, check if the vertex already exists
-	for (int& vertex : adjList[OriginalVertexIndex]) if (vertex == CheckVertexData) return true;
+	AdjListNode* temp = adjList[OriginalVertexIndex];
+
+	while (temp != nullptr)
+	{
+		if (temp->vertexData == CheckVertexData) return true;
+
+		temp = temp->next;
+	}
 
 	return false;
 }
