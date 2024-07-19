@@ -6,23 +6,21 @@
 struct Vertex
 {
 	int vertexData;
-	//The weight of the vertex 
-	int vertexWeight;
 	int vertexAdjListIndex;
 	bool bVisited; 
 
-	Vertex() : vertexData(-1), vertexAdjListIndex(-1), vertexWeight(-1), bVisited(false) {};
-	Vertex(int vData, int index) : vertexData(vData), vertexAdjListIndex(index), vertexWeight(-1), bVisited(false) {};
-	Vertex(int vData, int index, int vWeight) : vertexData(vData), vertexAdjListIndex(index), vertexWeight(vWeight), bVisited(false) {};
+	Vertex() : vertexData(-1), vertexAdjListIndex(-1), bVisited(false) {};
+	Vertex(int vData, int index) : vertexData(vData), vertexAdjListIndex(index), bVisited(false) {};
 };
 
 struct AdjListNode
 {
 	int vertexData;
-	int vertexWeight;
+	//The weight to get to this node 
+	int edgeWeight;
 	AdjListNode* next;
 
-	AdjListNode(int vData, int vWeight) : vertexData(vData), vertexWeight(vWeight), next(nullptr) {};
+	AdjListNode(int vData, int eWeight) : vertexData(vData), edgeWeight(eWeight), next(nullptr) {};
 };
 
 
@@ -57,5 +55,6 @@ private:
 private:
 	int numVertices;
 	bool bIsDirectedGraph = false;
+	bool bIsWeightedGraph = false;
 };
 

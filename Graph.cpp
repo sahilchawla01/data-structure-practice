@@ -20,6 +20,9 @@ void Graph::CreateGraph()
 	std::cout << "\nCreating Graph.. Is this a directed graph? (1 for yes, 0 for no): ";
 	std::cin >> bIsDirectedGraph;
 
+	std::cout << "\nCreating Graph.. Is this a weighted graph? (1 for yes, 0 for no): ";
+	std::cin >> bIsWeightedGraph;
+
 	system("cls");
 	std::cout << "\nNow, enter vertex information..";
 
@@ -33,22 +36,16 @@ void Graph::CreateGraph()
 
 		int vertexWeight = -1;
 
-		//If directed graph, enter the weight of the vertex
-		if (bIsDirectedGraph)
-		{
-			std::cout << "\nEnter vertex weight: ";
-			std::cin >> vertexWeight;
-		}
-
 		//Create and set the node
-		Vertex* temp = new Vertex(vertexId, i, vertexWeight);
+		Vertex* temp = new Vertex(vertexId, i);
 
 		//Store the new node
 		verticesArr.push_back(temp);
 
-		AdjListNode* rootAdjListNode = new AdjListNode(vertexId, vertexWeight);
-		//Also create the lists for each vertex
-		adjList.push_back(rootAdjListNode);
+
+		AdjListNode* dummyHeadNode = new AdjListNode(vertexId, -1);
+
+		adjList.push_back(dummyHeadNode);
 	}
 
 	//Second, now iterate through array of vertices and ask for which connections should be made
@@ -63,8 +60,9 @@ void Graph::CreateGraph()
 		//Store current vertex's root adjacent node
 		AdjListNode* headVertex = adjList[i];
 
-		while (headVertex != nullptr)
+		while(true)
 		{
+
 			std::cout << "\nEnter the vertex to connect (-1 to exit insertion for current vertex): ";
 			std::cin >> vertexToConnectData;
 
@@ -84,13 +82,42 @@ void Graph::CreateGraph()
 				continue;
 			}
 
-			Vertex* vertexToConnect = SearchVertices(vertexToConnectData);
-			AdjListNode* vertexAdjNode = new AdjListNode(vertexToConnect->vertexData, vertexToConnect->vertexWeight);
+			int edgeCost = 0;
+			if (bIsWeightedGraph)
+			{
+				std::cout << "\nEnter the cost to reach this vertex:";
+				std::cin >> edgeCost;
+				if (edgeCost < 0) edgeCost = 0;
+			}
 
+			//Create adj list node
+			AdjListNode* vertexAdjNode = new AdjListNode(vertexToConnectData, edgeCost);
+
+			//Reach the end of the adjList
+			while (headVertex->next != nullptr)
+				headVertex = headVertex->next;
+			//After reaching the end, then add the node
 			headVertex->next = vertexAdjNode;
 			headVertex = vertexAdjNode;
 
+			if (!bIsDirectedGraph) //If undirected graph, add a connection the opposite direction as well
+			{
+				Vertex* oppVertex = SearchVertices(vertexToConnectData);
+
+				AdjListNode* oppHeadVertex = adjList[oppVertex->vertexAdjListIndex];
+				AdjListNode* oppVertexAdjNode = new AdjListNode(currentVertex->vertexData, edgeCost);
+
+				while (oppHeadVertex->next != nullptr)
+					oppHeadVertex = oppHeadVertex->next;
+
+				//Add new node at end of list
+				oppHeadVertex->next = oppVertexAdjNode;
+				oppHeadVertex = oppVertexAdjNode;
+
+			}
+
 			std::cout << "\nVertex connected!";
+
 		}
 
 		system("cls");
@@ -112,13 +139,22 @@ void Graph::DisplayGraph()
 
 		std::cout << std::endl;
 
+		std::cout << "Vertex: (" << temp->vertexData << ")----->";
+
 		while (currAdjListNode != nullptr)
 		{
+			//If dummy node, go to next node
+			if (currAdjListNode->edgeWeight == -1)
+			{
+				currAdjListNode = currAdjListNode->next;
+				continue;
+			}
+
 			//If last element is not current element print arrow
 			if (currAdjListNode->next == nullptr)
-				std::cout << "(" << currAdjListNode->vertexData << "[Weight: " << currAdjListNode->vertexWeight << "])";
+				std::cout << "(" << currAdjListNode->vertexData << "[Weight: " << currAdjListNode->edgeWeight << "])";
 			else
-				std::cout << "(" << currAdjListNode->vertexData << "[Weight: "<< currAdjListNode->vertexWeight<<"])---->";
+				std::cout << "(" << currAdjListNode->vertexData << "[Weight: "<< currAdjListNode->edgeWeight <<"])---->";
 
 			currAdjListNode = currAdjListNode->next;
 		};
